@@ -5,12 +5,12 @@
 void setup() 
 {
   BoardInit();
+  Move(0.5, 100, Forward); 
+  delay(5000);
 }
 
 void loop() 
 {
-  Turn(90, Left);
-  delay(1000);
-  Turn(90, Right);
-  delay(1000);
+  Move(0.5, 30.48, Forward); 
+  Turn(90,Left);
 }
