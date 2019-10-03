@@ -6,33 +6,35 @@
         {
             "name": "Win32",
             "includePath": [
-                "c:/Users/Gabriel/Documents/GitHub/DefiParcoursTe/include",
-                "c:/Users/Gabriel/Documents/GitHub/DefiParcoursTe/src",
-                "c:/Users/Gabriel/Documents/GitHub/DefiParcoursTe/lib/LibRobUS-master/src",
-                "C:/Users/Gabriel/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/Wire/src",
-                "C:/Users/Gabriel/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SPI/src",
-                "C:/Users/Gabriel/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SoftwareSerial/src",
-                "C:/Users/Gabriel/.platformio/packages/framework-arduinoavr/cores/arduino",
-                "C:/Users/Gabriel/.platformio/packages/framework-arduinoavr/variants/mega",
-                "C:/Users/Gabriel/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/EEPROM/src",
-                "C:/Users/Gabriel/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/HID/src",
-                "C:/Users/Gabriel/.platformio/packages/tool-unity",
+                "e:/NextCloudData/Ecole/Université/S1/Projet/DefiParcoursTe/include",
+                "e:/NextCloudData/Ecole/Université/S1/Projet/DefiParcoursTe/src",
+                "e:/NextCloudData/Ecole/Université/S1/Projet/DefiParcoursTe/lib/LibRobUS-master/src",
+                "C:/Users/willi/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SoftwareSerial/src",
+                "C:/Users/willi/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SPI/src",
+                "C:/Users/willi/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/Wire/src",
+                "C:/Users/willi/.platformio/packages/framework-arduinoavr/cores/arduino",
+                "C:/Users/willi/.platformio/packages/framework-arduinoavr/variants/mega",
+                "C:/Users/willi/.platformio/lib/PID_ID2",
+                "C:/Users/willi/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/EEPROM/src",
+                "C:/Users/willi/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/HID/src",
+                "C:/Users/willi/.platformio/packages/tool-unity",
                 ""
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "path": [
-                    "c:/Users/Gabriel/Documents/GitHub/DefiParcoursTe/include",
-                    "c:/Users/Gabriel/Documents/GitHub/DefiParcoursTe/src",
-                    "c:/Users/Gabriel/Documents/GitHub/DefiParcoursTe/lib/LibRobUS-master/src",
-                    "C:/Users/Gabriel/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/Wire/src",
-                    "C:/Users/Gabriel/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SPI/src",
-                    "C:/Users/Gabriel/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SoftwareSerial/src",
-                    "C:/Users/Gabriel/.platformio/packages/framework-arduinoavr/cores/arduino",
-                    "C:/Users/Gabriel/.platformio/packages/framework-arduinoavr/variants/mega",
-                    "C:/Users/Gabriel/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/EEPROM/src",
-                    "C:/Users/Gabriel/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/HID/src",
-                    "C:/Users/Gabriel/.platformio/packages/tool-unity",
+                    "e:/NextCloudData/Ecole/Université/S1/Projet/DefiParcoursTe/include",
+                    "e:/NextCloudData/Ecole/Université/S1/Projet/DefiParcoursTe/src",
+                    "e:/NextCloudData/Ecole/Université/S1/Projet/DefiParcoursTe/lib/LibRobUS-master/src",
+                    "C:/Users/willi/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SoftwareSerial/src",
+                    "C:/Users/willi/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SPI/src",
+                    "C:/Users/willi/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/Wire/src",
+                    "C:/Users/willi/.platformio/packages/framework-arduinoavr/cores/arduino",
+                    "C:/Users/willi/.platformio/packages/framework-arduinoavr/variants/mega",
+                    "C:/Users/willi/.platformio/lib/PID_ID2",
+                    "C:/Users/willi/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/EEPROM/src",
+                    "C:/Users/willi/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/HID/src",
+                    "C:/Users/willi/.platformio/packages/tool-unity",
                     ""
                 ]
             },
@@ -48,7 +50,7 @@
             "intelliSenseMode": "clang-x64",
             "cStandard": "c11",
             "cppStandard": "c++11",
-            "compilerPath": "\"C:/Users/Gabriel/.platformio/packages/toolchain-atmelavr/bin/avr-gcc.exe\" -mmcu=atmega2560"
+            "compilerPath": "\"C:/Users/willi/.platformio/packages/toolchain-atmelavr/bin/avr-gcc.exe\" -mmcu=atmega2560"
         }
     ],
     "version": 4
