@@ -16,81 +16,88 @@
 
 void Turn(uint16_t Angle, bool Side)
 {
-    bool ExitLeft = false;
-    bool ExitRight = false;
-    uint32_t EncoderCountNeeded = 0;
-    uint32_t EncoderCountLeft = 0;
-    uint32_t EncoderCountRight = 0;
+  bool ExitLeft = false;
+  bool ExitRight = false;
+  uint32_t EncoderCountNeeded = 0;
+  uint32_t EncoderCountLeft = 0;
+  uint32_t EncoderCountRight = 0;
 
-    Angle%=360;
+  Angle%=360;
+
+  #ifdef Dumb
     EncoderCountNeeded = 7822*(uint32_t)Angle/360;
+  #endif
 
-    ENCODER_Reset(Left);
-    ENCODER_Reset(Right);
+  #ifdef Dumber
+    EncoderCountNeeded = 7820*(uint32_t)Angle/360;
+  #endif
+  
+  ENCODER_Reset(Left);
+  ENCODER_Reset(Right);
 
-    if (Side==Left)
+  if (Side==Left)
+  {
+    #ifdef Dumb
+      MOTOR_SetSpeed(Left,-0.15);
+      MOTOR_SetSpeed(Right,0.15);
+    #endif
+
+    #ifdef Dumber
+      MOTOR_SetSpeed(Left,-0.15);
+      MOTOR_SetSpeed(Right,0.1625);
+    #endif
+  }
+
+  else
+  {
+    #ifdef Dumb
+      MOTOR_SetSpeed(Left,0.16);
+      MOTOR_SetSpeed(Right,-0.15);
+    #endif
+
+    #ifdef Dumber
+      MOTOR_SetSpeed(Left,0.15);
+      MOTOR_SetSpeed(Right,-0.15);
+    #endif
+  }
+
+  while (ExitLeft == false || ExitRight == false)
+  {
+    EncoderCountLeft = ENCODER_Read(Left);
+    EncoderCountRight = ENCODER_Read(Right);
+
+    if (Side == Left)
     {
-      #ifdef Dumb
-        MOTOR_SetSpeed(Left,-0.15);
-        MOTOR_SetSpeed(Right,0.15);
-      #endif
+      if (EncoderCountLeft == ~EncoderCountNeeded)
+      {
+        MOTOR_SetSpeed(Left,0);
+        ExitLeft = true;
+      }
 
-      #ifdef Dumber
-        MOTOR_SetSpeed(Left,-0.15);
-        MOTOR_SetSpeed(Right,0.17);
-      #endif
+      if (EncoderCountRight == EncoderCountNeeded)
+      {
+        MOTOR_SetSpeed(Right,0); 
+        ExitRight = true;
+      } 
     }
-
+        
     else
     {
-      #ifdef Dumb
-        MOTOR_SetSpeed(Left,0.16);
-        MOTOR_SetSpeed(Right,-0.15);
-      #endif
+      if (EncoderCountLeft == EncoderCountNeeded)
+      {
+        MOTOR_SetSpeed(Left,0);
+        ExitLeft = true;
+      }
 
-      #ifdef Dumber
-        MOTOR_SetSpeed(Left,0.15);
-        MOTOR_SetSpeed(Right,-0.15);
-      #endif
+      if (EncoderCountRight == ~EncoderCountNeeded)
+      {
+        MOTOR_SetSpeed(Right,0); 
+        ExitRight = true;
+      } 
     }
-
-    while (ExitLeft == false || ExitRight == false)
-    {
-        EncoderCountLeft = ENCODER_Read(Left);
-        EncoderCountRight = ENCODER_Read(Right);
-
-        if (Side == Left)
-        {
-            if (EncoderCountLeft == ~EncoderCountNeeded)
-            {
-                MOTOR_SetSpeed(Left,0);
-                ExitLeft = true;
-            }
-
-            if (EncoderCountRight == EncoderCountNeeded)
-            {
-                MOTOR_SetSpeed(Right,0); 
-                ExitRight = true;
-            } 
-        }
-        
-        else
-        {
-            if (EncoderCountLeft == EncoderCountNeeded)
-            {
-                MOTOR_SetSpeed(Left,0);
-                ExitLeft = true;
-            }
-
-            if (EncoderCountRight == ~EncoderCountNeeded)
-            {
-                MOTOR_SetSpeed(Right,0); 
-                ExitRight = true;
-            } 
-        }
-    }
-    ENCODER_Reset(Left);
-    ENCODER_Reset(Right);
+  }
+  ENCODER_Reset(Left);
+  ENCODER_Reset(Right);
 }
 
 void Move(float SpeedCommand, float DistanceToDo, bool Direction)
@@ -124,7 +131,7 @@ void Move(float SpeedCommand, float DistanceToDo, bool Direction)
   while (DistanceDone < DistanceToDo)
   {
   
-    if (DistanceToDo - DistanceDone > 30 and SpeedRight < SpeedCommand)
+    if (DistanceToDo - DistanceDone > 30 && SpeedRight < SpeedCommand)
     {
       SpeedRight = SpeedRight + 0.03; //Acceleration
     }
@@ -159,19 +166,19 @@ void Move(float SpeedCommand, float DistanceToDo, bool Direction)
 
     if (Direction == Reverse)
     {
-      MOTOR_SetSpeed(RIGHT, SpeedRight * -1);
-      MOTOR_SetSpeed(LEFT, SpeedLeft * -1);
+      MOTOR_SetSpeed(Right, SpeedRight * -1);
+      MOTOR_SetSpeed(Left, SpeedLeft * -1);
     }
     else if (Direction == Forward)
     {
-      MOTOR_SetSpeed(RIGHT, SpeedRight);
-      MOTOR_SetSpeed(LEFT, SpeedLeft);
+      MOTOR_SetSpeed(Right, SpeedRight);
+      MOTOR_SetSpeed(Left, SpeedLeft);
     }
 
     delay(100);
 
-    EncoderCountRight = abs(ENCODER_ReadReset(RIGHT));
-    EncoderCountLeft = abs(ENCODER_ReadReset(LEFT));
+    EncoderCountRight = abs(ENCODER_ReadReset(Right));
+    EncoderCountLeft = abs(ENCODER_ReadReset(Left));
 
     DistanceDone = DistanceDone + (EncoderCountRight + EncoderCountLeft) / 2 / 133.4;
 
@@ -179,8 +186,8 @@ void Move(float SpeedCommand, float DistanceToDo, bool Direction)
     CumuledError = CumuledError + InstantError;
   }
 
-  MOTOR_SetSpeed(RIGHT, 0);
-  MOTOR_SetSpeed(LEFT, 0);
+  MOTOR_SetSpeed(Right, 0);
+  MOTOR_SetSpeed(Left, 0);
 
   ENCODER_Reset(Left);
   ENCODER_Reset(Right);
