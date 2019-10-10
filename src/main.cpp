@@ -2,15 +2,22 @@
 #include <LibRobus.h>
 #include "Functions.h"
 
+
 void setup() 
 {
   BoardInit();
-  Move(0.5, 100, Forward); 
-  delay(5000);
+  
 }
 
 void loop() 
 {
-  Move(0.5, 30.48, Forward); 
-  Turn(90,Left);
+  
+  Turn(90,Right);
+  delay (500);
+  Turn(90,Right);
+  delay (500);
+  Turn(180,Right);
+  delay (500);
+  Move(0.4,2000,Forward);
+  while(1);
 }

@@ -12,10 +12,12 @@
 #include <Arduino.h>
 #include <LibRobus.h>
 
+#define Dumb
+
 void Turn(uint16_t Angle, bool Side)
 {
-    bool ExitOne = false;
-    bool ExitTwo = false;
+    bool ExitLeft = false;
+    bool ExitRight = false;
     uint32_t EncoderCountNeeded = 0;
     uint32_t EncoderCountLeft = 0;
     uint32_t EncoderCountRight = 0;
@@ -28,17 +30,31 @@ void Turn(uint16_t Angle, bool Side)
 
     if (Side==Left)
     {
+      #ifdef Dumb
         MOTOR_SetSpeed(Left,-0.15);
         MOTOR_SetSpeed(Right,0.15);
+      #endif
+
+      #ifdef Dumber
+        MOTOR_SetSpeed(Left,-0.15);
+        MOTOR_SetSpeed(Right,0.17);
+      #endif
     }
 
     else
     {
+      #ifdef Dumb
+        MOTOR_SetSpeed(Left,0.16);
+        MOTOR_SetSpeed(Right,-0.15);
+      #endif
+
+      #ifdef Dumber
         MOTOR_SetSpeed(Left,0.15);
         MOTOR_SetSpeed(Right,-0.15);
+      #endif
     }
 
-    while (ExitOne == false || ExitTwo == false)
+    while (ExitLeft == false || ExitRight == false)
     {
         EncoderCountLeft = ENCODER_Read(Left);
         EncoderCountRight = ENCODER_Read(Right);
@@ -48,13 +64,13 @@ void Turn(uint16_t Angle, bool Side)
             if (EncoderCountLeft == ~EncoderCountNeeded)
             {
                 MOTOR_SetSpeed(Left,0);
-                ExitOne = true;
+                ExitLeft = true;
             }
 
             if (EncoderCountRight == EncoderCountNeeded)
             {
                 MOTOR_SetSpeed(Right,0); 
-                ExitTwo = true;
+                ExitRight = true;
             } 
         }
         
@@ -63,13 +79,13 @@ void Turn(uint16_t Angle, bool Side)
             if (EncoderCountLeft == EncoderCountNeeded)
             {
                 MOTOR_SetSpeed(Left,0);
-                ExitOne = true;
+                ExitLeft = true;
             }
 
             if (EncoderCountRight == ~EncoderCountNeeded)
             {
                 MOTOR_SetSpeed(Right,0); 
-                ExitTwo = true;
+                ExitRight = true;
             } 
         }
     }
@@ -84,30 +100,59 @@ void Move(float SpeedCommand, float DistanceToDo, bool Direction)
   float SpeedRight = 0;
   float SpeedLeft = 0;
 
-  float Kp = 0;
+  float Kp = 0.000004;
   float Ki = 0.0001;
 
-  int EncodeurCountRight = 0;
-  int EncodeurCountLeft = 0;
+  int EncoderCountRight = 0;
+  int EncoderCountLeft = 0;
 
-  int InstantError = 0;
-  int CumuledError = 25;
+  #ifdef Dumb
+    int InstantError = 0;
+    int CumuledError = 50;
+  #endif
+
+  #ifdef Dumber
+    int InstantError = 0;
+    int CumuledError = -160;
+  #endif
+
+  bool Deceleration = 0;
     
+  ENCODER_Reset(Left);
+  ENCODER_Reset(Right);
   
   while (DistanceDone < DistanceToDo)
   {
   
     if (DistanceToDo - DistanceDone > 30 and SpeedRight < SpeedCommand)
     {
-      SpeedRight = SpeedRight + 0.02; //Acceleration
+      SpeedRight = SpeedRight + 0.03; //Acceleration
     }
-    else if (DistanceToDo - DistanceDone < 30 and SpeedRight > 0.15)
+
+    else if (DistanceToDo - DistanceDone < 30 )
     {
-      SpeedRight = SpeedRight - 0.02; //Deceleration
+      SpeedRight = SpeedRight - 0.03; //Deceleration
+      if (Deceleration == 0)
+      {
+        #ifdef Dumb
+          CumuledError = 25;
+        #endif
+
+        #ifdef Dumber
+          CumuledError = -50;
+        #endif
+      }
+      Deceleration = 1;
     }
+
     else
     {
       SpeedRight = SpeedCommand;
+    }
+    
+    if (SpeedRight < 0.20)
+    {
+      SpeedRight = 0.20;
     }
     
     SpeedLeft = SpeedRight + (InstantError * Kp) + (CumuledError * Ki);
@@ -125,17 +170,18 @@ void Move(float SpeedCommand, float DistanceToDo, bool Direction)
 
     delay(100);
 
-    EncodeurCountRight = abs(ENCODER_ReadReset(RIGHT));
-    EncodeurCountLeft = abs(ENCODER_ReadReset(LEFT));
+    EncoderCountRight = abs(ENCODER_ReadReset(RIGHT));
+    EncoderCountLeft = abs(ENCODER_ReadReset(LEFT));
 
-    DistanceDone = DistanceDone + (EncodeurCountRight + EncodeurCountLeft) / 2 / 133.4;
+    DistanceDone = DistanceDone + (EncoderCountRight + EncoderCountLeft) / 2 / 133.4;
 
-    InstantError = EncodeurCountRight - EncodeurCountLeft;
+    InstantError = EncoderCountRight - EncoderCountLeft;
     CumuledError = CumuledError + InstantError;
-
-    //Serial.println(DistanceDone);
   }
 
   MOTOR_SetSpeed(RIGHT, 0);
   MOTOR_SetSpeed(LEFT, 0);
+
+  ENCODER_Reset(Left);
+  ENCODER_Reset(Right);
 }
