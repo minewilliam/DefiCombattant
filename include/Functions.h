@@ -1,11 +1,10 @@
-/*
+/**
  * Functions.h
  *
- *  Created on: Oct 27, 2019
- *      Author: Gabriel
+ * Created on: sept 27, 2019
+ * Author: Gabriel
  * 
- *  Description:    Prototype de Fonction de base pour 
- *                  que le robot puisse se déplacer.
+ * Description:    Prototype de Fonction de base pour que le robot puisse se déplacer.
  */
 
 #include <Arduino.h>
