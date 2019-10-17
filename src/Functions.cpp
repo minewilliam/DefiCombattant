@@ -12,7 +12,7 @@
 #include <Arduino.h>
 #include <LibRobus.h>
 
-#define Dumb
+#define Dumber
 
 void Turn(uint16_t Angle, bool Side)
 {
