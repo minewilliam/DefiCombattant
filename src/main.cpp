@@ -1,14 +1,15 @@
 #include <Arduino.h>
-#include <LibRobus.h>
-#include "Functions.h"
-
+#include "Adafruit_TCS34725.h"
+#include "LibRobus.h"
 
 void setup() 
 {
   BoardInit();
 }
 
-void loop() 
+
+void loop()
 {
-  while(1);
+  Serial.println(GetColorHex(),HEX);
 }
+
