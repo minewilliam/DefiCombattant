@@ -16,11 +16,6 @@
 #define REFLECTION_SENSOR_RIGHT 42
 #define REFLECTION_SENSOR_CENTER 43
 
-int ReflectionSensorLeft,ReflectionSensorRight,ReflectionSensorCenter;
-
-enum {Left, Right};
-enum {Forward, Reverse};
-
 enum Color
 {
     Red,

@@ -9,6 +9,11 @@
 
 #include "RobotSense.h"
 
+enum {Left, Right};
+enum {Forward, Reverse};
+
+int ReflectionSensorLeft,ReflectionSensorRight,ReflectionSensorCenter;
+
 void RobosenseInit()
 {
   pinMode(REFLECTION_SENSOR_RIGHT, INPUT);
@@ -18,7 +23,7 @@ void RobosenseInit()
 
 Color COLOR_Read()
 {
-
+  return Red;
 }
 
 void FollowLine(float SpeedCommand, float DistanceToDo, bool Direction)
@@ -27,6 +32,9 @@ void FollowLine(float SpeedCommand, float DistanceToDo, bool Direction)
 
   float SpeedRight = 0;
   float SpeedLeft = 0;
+
+  float AdjustRight = 0;
+  float AdjustLeft = 0;
 
   float Kp = 0.000004;
   float Ki = 0.0001;
@@ -51,9 +59,9 @@ void FollowLine(float SpeedCommand, float DistanceToDo, bool Direction)
   
   while (DistanceDone < DistanceToDo)
   {
-    ReflectionSensorLeft != digitalRead(REFLECTION_SENSOR_LEFT);
-    ReflectionSensorRight != digitalRead(REFLECTION_SENSOR_RIGHT);
-    ReflectionSensorCenter != digitalRead(REFLECTION_SENSOR_CENTER);
+    ReflectionSensorLeft = !digitalRead(REFLECTION_SENSOR_LEFT);
+    ReflectionSensorRight = !digitalRead(REFLECTION_SENSOR_RIGHT);
+    ReflectionSensorCenter = !digitalRead(REFLECTION_SENSOR_CENTER);
 
     if (DistanceToDo - DistanceDone > 30 && SpeedRight < SpeedCommand)
     {
@@ -87,32 +95,32 @@ void FollowLine(float SpeedCommand, float DistanceToDo, bool Direction)
     
     SpeedLeft = SpeedRight + (InstantError * Kp) + (CumuledError * Ki);
 
-    if(!ReflectionSensorCenter)
+    if(ReflectionSensorCenter)
     {
       if(ReflectionSensorLeft)
       {
-        SpeedLeft = SpeedRight-0.1;
+        AdjustLeft = SpeedRight-0.1;
       }
       else if(ReflectionSensorRight)
       {
-        SpeedRight = SpeedLeft-0.1;
+        AdjustRight = SpeedLeft-0.1;
       }
       else
       {
-        SpeedLeft = 0;
-        SpeedRight = 0;
+        AdjustLeft = 0;
+        AdjustRight = 0;
       }
     }
 
     if (Direction == Reverse)
     {
-      MOTOR_SetSpeed(Right, SpeedRight * -1);
-      MOTOR_SetSpeed(Left, SpeedLeft * -1);
+      MOTOR_SetSpeed(Right, AdjustRight * -1);
+      MOTOR_SetSpeed(Left, AdjustLeft * -1);
     }
     else if (Direction == Forward)
     {
-      MOTOR_SetSpeed(Right, SpeedRight);
-      MOTOR_SetSpeed(Left, SpeedLeft);
+      MOTOR_SetSpeed(Right, AdjustRight);
+      MOTOR_SetSpeed(Left, AdjustLeft);
     }
 
     delay(100);
