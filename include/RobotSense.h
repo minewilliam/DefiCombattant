@@ -12,9 +12,9 @@
 
 #define Dumb
 
-#define REFLECTION_SENSOR_LEFT 41
-#define REFLECTION_SENSOR_RIGHT 42
-#define REFLECTION_SENSOR_CENTER 43
+#define REFLECTION_SENSOR_LEFT 43
+#define REFLECTION_SENSOR_RIGHT 41
+#define REFLECTION_SENSOR_CENTER 42
 
 enum Color
 {
@@ -43,10 +43,9 @@ Color COLOR_Read();
  * @brief This function is used to move forward or backward the robot
  * 
  * @param SpeedCommand Speed 0 to 1
- * @param DistanceToDo Distance to do in centimeter
  * @param Direction 0 is forward and 1 is backward
  */
-void FollowLine(float SpeedCommand, float DistanceToDo, bool Direction);
+bool FollowLine(float SpeedCommand, bool Direction);
 
 /**
  * @brief 

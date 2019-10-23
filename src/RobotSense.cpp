@@ -2,7 +2,7 @@
  * RobotSense.c
  *
  * Created on: Oct 17, 2019
- * Author: William
+ * Authors: William, Fred
  * 
  * Description:
  */
@@ -57,92 +57,113 @@ Color COLOR_Read()
   }
 }
 
-void FollowLine(float SpeedCommand, float DistanceToDo, bool Direction)
+bool FollowLine(float SpeedCommand, bool Direction)
 {
-  float DistanceDone = 0;
-
-  float SpeedRight = 0;
-  float SpeedLeft = 0;
+  static int ReflectionSensorLeft_debounce, ReflectionSensorRight_debounce, ReflectionSensorCenter_debounce;
+  static bool Following = true;
+  static bool Following_debounce = true;
+  static bool NewFollower = true;
+  static float DistanceDone = 0;
+  static float Speed = 0;
+  static int EncoderCountRight = 0;
+  static int EncoderCountLeft = 0;
 
   float AdjustRight = 0;
   float AdjustLeft = 0;
-
-  float Kp = 0.000004;
-  float Ki = 0.0001;
-
-  int EncoderCountRight = 0;
-  int EncoderCountLeft = 0;
-
-  #ifdef Dumb
-    int InstantError = 0;
-    int CumuledError = 50;
-  #endif
-
-  #ifdef Dumber
-    int InstantError = 0;
-    int CumuledError = -160;
-  #endif
-
-  bool Deceleration = 0;
-    
-  ENCODER_Reset(Left);
-  ENCODER_Reset(Right);
   
-  while (DistanceDone < DistanceToDo)
+  if(NewFollower)
   {
-    ReflectionSensorLeft = !digitalRead(REFLECTION_SENSOR_LEFT);
-    ReflectionSensorRight = !digitalRead(REFLECTION_SENSOR_RIGHT);
-    ReflectionSensorCenter = !digitalRead(REFLECTION_SENSOR_CENTER);
+    ReflectionSensorLeft_debounce = true;
+    ReflectionSensorRight_debounce = true;
+    ReflectionSensorCenter_debounce = true;
+    NewFollower = false;
+    Following = true;
+    Following_debounce = true;
+    DistanceDone = 0;
+    Speed = 0;
+    EncoderCountRight = 0;
+    EncoderCountLeft = 0;
+    ENCODER_Reset(Left);
+    ENCODER_Reset(Right);
+  }
 
-    if (DistanceToDo - DistanceDone > 30 && SpeedRight < SpeedCommand)
+  if (Following)
+  {
+    //Start Read & Debounce
+    int SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
+    int SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+    int SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+
+    if(ReflectionSensorLeft != SLeft)
     {
-      SpeedRight = SpeedRight + 0.03; //Acceleration
+      if(ReflectionSensorLeft_debounce == SLeft)
+      {
+        ReflectionSensorLeft = SLeft;
+      }
+      ReflectionSensorLeft_debounce = SLeft;
     }
 
-    else if (DistanceToDo - DistanceDone < 30 )
+    if(ReflectionSensorRight != SRight)
     {
-      SpeedRight = SpeedRight - 0.03; //Deceleration
-      if (Deceleration == 0)
+      if(ReflectionSensorRight_debounce == SRight)
       {
-        #ifdef Dumb
-          CumuledError = 25;
-        #endif
-
-        #ifdef Dumber
-          CumuledError = -50;
-        #endif
+        ReflectionSensorRight = SRight;
       }
-      Deceleration = 1;
+      ReflectionSensorRight_debounce = SRight;
+    }
+
+    if(ReflectionSensorCenter != SCenter)
+    {
+      if(ReflectionSensorCenter_debounce == SCenter)
+      {
+        ReflectionSensorCenter = SCenter;
+      }
+      ReflectionSensorCenter_debounce = SCenter;
+    }
+
+    //End Read & Debounce
+
+    if (DistanceDone < 30 && Speed < SpeedCommand)
+    {
+      Speed += 0.03; //Acceleration
+    }
+
+    Speed = SpeedCommand;
+    
+    if (Speed < 0.20)
+    {
+      Speed = 0.20;
+    }
+
+    if(ReflectionSensorCenter&&ReflectionSensorRight&&ReflectionSensorLeft)
+    {
+      Following = false;
+    }
+    else if(!ReflectionSensorCenter&&!ReflectionSensorRight&&!ReflectionSensorLeft)
+    {
+      Following = false;
+    }
+    else if(!ReflectionSensorCenter)
+    {
+      AdjustLeft = Speed;
+      AdjustRight = Speed;
+    }
+    else if(!ReflectionSensorLeft)
+    {
+      AdjustLeft = Speed + 0.1;
+      AdjustRight = Speed - 0.1;
+    }
+    else if(!ReflectionSensorRight)
+    {
+      AdjustRight = Speed + 0.1;
+      AdjustLeft = Speed - 0.1;
     }
     else
     {
-      SpeedRight = SpeedCommand;
+      AdjustLeft=0;
+      AdjustRight=0;
     }
-    
-    if (SpeedRight < 0.20)
-    {
-      SpeedRight = 0.20;
-    }
-    
-    SpeedLeft = SpeedRight + (InstantError * Kp) + (CumuledError * Ki);
-
-    if(ReflectionSensorCenter)
-    {
-      if(ReflectionSensorLeft)
-      {
-        AdjustLeft = SpeedRight-0.1;
-      }
-      else if(ReflectionSensorRight)
-      {
-        AdjustRight = SpeedLeft-0.1;
-      }
-      else
-      {
-        AdjustLeft = 0;
-        AdjustRight = 0;
-      }
-    }
-
+   
     if (Direction == Reverse)
     {
       MOTOR_SetSpeed(Right, AdjustRight * -1);
@@ -154,22 +175,19 @@ void FollowLine(float SpeedCommand, float DistanceToDo, bool Direction)
       MOTOR_SetSpeed(Left, AdjustLeft);
     }
 
-    delay(100);
-
     EncoderCountRight = abs(ENCODER_ReadReset(Right));
     EncoderCountLeft = abs(ENCODER_ReadReset(Left));
 
     DistanceDone = DistanceDone + (EncoderCountRight + EncoderCountLeft) / 2 / 133.4;
-
-    InstantError = EncoderCountRight - EncoderCountLeft;
-    CumuledError = CumuledError + InstantError;
+  }
+  else
+  {
+    NewFollower = true;
+    ENCODER_Reset(Left);
+    ENCODER_Reset(Right);
   }
 
-  MOTOR_SetSpeed(Right, 0);
-  MOTOR_SetSpeed(Left, 0);
-
-  ENCODER_Reset(Left);
-  ENCODER_Reset(Right);
+  return Following;
 }
 
 void LeverUp(void)
