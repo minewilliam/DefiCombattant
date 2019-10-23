@@ -11,6 +11,6 @@ void setup()
 void loop()
 {
   // Serial.println(GetColorHex(),HEX);
-  FollowLine(0.6,10000,Forward);
+  FollowLine(0.4,10000,Reverse);
 }
 
