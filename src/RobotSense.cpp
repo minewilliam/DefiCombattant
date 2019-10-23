@@ -2,7 +2,7 @@
  * RobotSense.c
  *
  * Created on: Oct 17, 2019
- * Author: William
+ * Authors: William, Fred
  * 
  * Description:
  */
@@ -36,21 +36,8 @@ void FollowLine(float SpeedCommand, float DistanceToDo, bool Direction)
   float AdjustRight = 0;
   float AdjustLeft = 0;
 
-  float Kp = 0.000004;
-  float Ki = 0.0001;
-
   int EncoderCountRight = 0;
   int EncoderCountLeft = 0;
-
-  #ifdef Dumb
-    int InstantError = 0;
-    int CumuledError = 50;
-  #endif
-
-  #ifdef Dumber
-    int InstantError = 0;
-    int CumuledError = -160;
-  #endif
 
   bool Deceleration = 0;
     
@@ -71,16 +58,6 @@ void FollowLine(float SpeedCommand, float DistanceToDo, bool Direction)
     else if (DistanceToDo - DistanceDone < 30 )
     {
       SpeedRight = SpeedRight - 0.03; //Deceleration
-      if (Deceleration == 0)
-      {
-        #ifdef Dumb
-          CumuledError = 25;
-        #endif
-
-        #ifdef Dumber
-          CumuledError = -50;
-        #endif
-      }
       Deceleration = 1;
     }
     else
@@ -95,43 +72,27 @@ void FollowLine(float SpeedCommand, float DistanceToDo, bool Direction)
     
     SpeedLeft = SpeedRight;
 
-    if(!ReflectionSensorLeft)
+    if(!ReflectionSensorCenter)
     {
       AdjustLeft = SpeedLeft;
       AdjustRight = SpeedRight;
     }
+    else if(!ReflectionSensorLeft)
+    {
+      AdjustLeft = SpeedRight + 0.1;
+      AdjustRight = SpeedLeft - 0.1;
+    }
+    else if(!ReflectionSensorRight)
+    {
+      AdjustRight = SpeedLeft + 0.1;
+      AdjustLeft = SpeedRight - 0.1;
+    }
     else
     {
-      AdjustLeft = 0;
-      AdjustRight = 0;
+      AdjustLeft=0;
+      AdjustRight=0;
     }
-    
-
-    // if(ReflectionSensorCenter)
-    // {
-    //   if(!ReflectionSensorLeft)
-    //   {
-    //     AdjustLeft = SpeedRight - 0.1;
-    //     AdjustRight = SpeedLeft + 0.1;
-    //   }
-    //   else if(!ReflectionSensorRight)
-    //   {
-    //     AdjustRight = SpeedLeft - 0.1;
-    //     AdjustLeft = SpeedRight + 0.1;
-    //   }
-    //   else
-    //   {
-    //     AdjustLeft = 0;
-    //     AdjustRight = 0;
-    //   }
-    // }
-    // else
-    // {
-    //   AdjustLeft = SpeedLeft;
-    //   AdjustRight = SpeedRight;
-    // }
-    
-
+   
     if (Direction == Reverse)
     {
       MOTOR_SetSpeed(Right, AdjustRight * -1);
