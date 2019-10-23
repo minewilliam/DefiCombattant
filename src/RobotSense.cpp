@@ -96,34 +96,35 @@ void FollowLine(float SpeedCommand, float DistanceToDo, bool Direction)
     SpeedLeft = SpeedRight + (InstantError * Kp) + (CumuledError * Ki);
 
 
-    if((!ReflectionSensorLeft&&!ReflectionSensorRight))
-    {
-      AdjustLeft = 0;
-      AdjustRight = 0;
-    }
-    else if(ReflectionSensorCenter)
-    {
-      if(!ReflectionSensorLeft)
-      {
-        AdjustLeft = SpeedRight - 0.1;
-        AdjustRight = SpeedLeft + 0.1;
-      }
-      else if(!ReflectionSensorRight)
-      {
-        AdjustRight = SpeedLeft - 0.1;
-        AdjustLeft = SpeedRight + 0.1;
-      }
-      else
-      {
-        AdjustLeft = 0;
-        AdjustRight = 0;
-      }
-    }
-    else
+    if(!ReflectionSensorCenter)
     {
       AdjustLeft = SpeedLeft;
       AdjustRight = SpeedRight;
     }
+
+    // if(ReflectionSensorCenter)
+    // {
+    //   if(!ReflectionSensorLeft)
+    //   {
+    //     AdjustLeft = SpeedRight - 0.1;
+    //     AdjustRight = SpeedLeft + 0.1;
+    //   }
+    //   else if(!ReflectionSensorRight)
+    //   {
+    //     AdjustRight = SpeedLeft - 0.1;
+    //     AdjustLeft = SpeedRight + 0.1;
+    //   }
+    //   else
+    //   {
+    //     AdjustLeft = 0;
+    //     AdjustRight = 0;
+    //   }
+    // }
+    // else
+    // {
+    //   AdjustLeft = SpeedLeft;
+    //   AdjustRight = SpeedRight;
+    // }
     
 
     if (Direction == Reverse)
