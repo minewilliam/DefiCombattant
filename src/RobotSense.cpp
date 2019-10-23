@@ -30,8 +30,7 @@ void FollowLine(float SpeedCommand, float DistanceToDo, bool Direction)
 {
   float DistanceDone = 0;
 
-  float SpeedRight = 0;
-  float SpeedLeft = 0;
+  float Speed = 0;
 
   float AdjustRight = 0;
   float AdjustLeft = 0;
@@ -39,7 +38,7 @@ void FollowLine(float SpeedCommand, float DistanceToDo, bool Direction)
   int EncoderCountRight = 0;
   int EncoderCountLeft = 0;
 
-  bool Deceleration = 0;
+  bool Deceleration = false;
     
   ENCODER_Reset(Left);
   ENCODER_Reset(Right);
@@ -50,42 +49,40 @@ void FollowLine(float SpeedCommand, float DistanceToDo, bool Direction)
     ReflectionSensorRight = digitalRead(REFLECTION_SENSOR_RIGHT);
     ReflectionSensorCenter = digitalRead(REFLECTION_SENSOR_CENTER);
 
-    if (DistanceToDo - DistanceDone > 30 && SpeedRight < SpeedCommand)
+    if (DistanceToDo - DistanceDone > 30 && Speed < SpeedCommand)
     {
-      SpeedRight = SpeedRight + 0.03; //Acceleration
+      Speed += + 0.03; //Acceleration
     }
 
     else if (DistanceToDo - DistanceDone < 30 )
     {
-      SpeedRight = SpeedRight - 0.03; //Deceleration
-      Deceleration = 1;
+      Speed -= 0.03; //Deceleration
+      Deceleration = true;
     }
     else
     {
-      SpeedRight = SpeedCommand;
+      Speed = SpeedCommand;
     }
     
-    if (SpeedRight < 0.20)
+    if (Speed < 0.20)
     {
-      SpeedRight = 0.20;
+      Speed = 0.20;
     }
-    
-    SpeedLeft = SpeedRight;
 
     if(!ReflectionSensorCenter)
     {
-      AdjustLeft = SpeedLeft;
-      AdjustRight = SpeedRight;
+      AdjustLeft = Speed;
+      AdjustRight = Speed;
     }
     else if(!ReflectionSensorLeft)
     {
-      AdjustLeft = SpeedRight + 0.1;
-      AdjustRight = SpeedLeft - 0.1;
+      AdjustLeft = Speed + 0.1;
+      AdjustRight = Speed - 0.1;
     }
     else if(!ReflectionSensorRight)
     {
-      AdjustRight = SpeedLeft + 0.1;
-      AdjustLeft = SpeedRight - 0.1;
+      AdjustRight = Speed + 0.1;
+      AdjustLeft = Speed - 0.1;
     }
     else
     {
