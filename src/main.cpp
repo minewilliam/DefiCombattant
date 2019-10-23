@@ -1,6 +1,6 @@
-#include <Arduino.h>
+#include "Functions.h"
+#include "RobotSense.h"
 #include "Adafruit_TCS34725.h"
-#include "LibRobus.h"
 
 void setup() 
 {
