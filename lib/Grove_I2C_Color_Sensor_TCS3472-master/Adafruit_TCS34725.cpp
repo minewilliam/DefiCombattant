@@ -176,10 +176,7 @@ uint32_t GetColorHex(void)
   g = green; g /= sum;
   b = blue; b /= sum;
   r *= 256; g *= 256; b *= 256;
-  Serial.print("\t");
-  Serial.print((int)r, HEX); Serial.print((int)g, HEX); Serial.print((int)b, HEX);
-  Serial.println();  
-
+  
   return (uint32_t)r<<16|(int)g<<8|(int)b;
 }
 
