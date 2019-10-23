@@ -176,8 +176,8 @@ uint32_t GetColorHex(void)
   g = green; g /= sum;
   b = blue; b /= sum;
   r *= 256; g *= 256; b *= 256;
-  
-  return (uint32_t)r<<16|(int)g<<8|(int)b;
+
+  return (uint32_t)r<<16|(uint32_t)g<<8|(uint32_t)b;
 }
 
 /**************************************************************************/

@@ -63,3 +63,13 @@ bool LineFound();
  */
 int IR_Distance();
 
+/**
+ * @brief Lever le levier
+ */
+void LeverUp(void);
+
+/**
+ * @brief Baisser le levier
+ */
+void Impale(void);
+ 

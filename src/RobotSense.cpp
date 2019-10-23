@@ -23,7 +23,38 @@ void RobosenseInit()
 
 Color COLOR_Read()
 {
-  return Red;
+  uint32_t RGB;
+  uint8_t red, blue, green;
+
+  RGB=GetColorHex();
+  blue=(RGB&0xFF);
+  green=(RGB&0xFF00)>>8;
+  red=(RGB&0xFF0000)>>16;
+
+  if (blue>0xE1 && green>0xE1 && red>0xE1)
+  {
+    return White; 
+  }
+  
+  if (blue<0x50 && green<0x50 && red>0x90)
+  {
+    return Red;
+  }
+  
+  if (blue<0x60 && green>0x60 && red<0x30)
+  {
+    return Green;
+  }
+  
+  if (blue>0x90 && green<0x60 && red<0x20)
+  {
+    return Blue;
+  }
+  
+  if (blue<0x30 && green>0x60 && red>0x60)
+  {
+    return Yellow;
+  }
 }
 
 void FollowLine(float SpeedCommand, float DistanceToDo, bool Direction)
@@ -141,4 +172,14 @@ void FollowLine(float SpeedCommand, float DistanceToDo, bool Direction)
   ENCODER_Reset(Right);
 }
 
+void LeverUp(void)
+{
+    SERVO_Enable(0);
+    SERVO_SetAngle(0,0);
+}
 
+void Impale(void)
+{
+    SERVO_Enable(0);
+    SERVO_SetAngle(0,90);
+}

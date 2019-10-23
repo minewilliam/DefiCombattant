@@ -10,7 +10,8 @@ void setup()
 
 void loop()
 {
-  // Serial.println(GetColorHex(),HEX);
-  FollowLine(0.4,10000,Reverse);
+  LeverUp();
+  delay(1000);
+  Impale();
+  delay(1000);
 }
-
