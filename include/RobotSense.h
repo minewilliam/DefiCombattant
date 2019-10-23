@@ -46,7 +46,7 @@ Color COLOR_Read();
  * @param DistanceToDo Distance to do in centimeter
  * @param Direction 0 is forward and 1 is backward
  */
-void FollowLine(float SpeedCommand, float DistanceToDo, bool Direction);
+bool FollowLine(float SpeedCommand, float DistanceToDo, bool Direction);
 
 /**
  * @brief 

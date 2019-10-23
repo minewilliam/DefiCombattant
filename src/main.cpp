@@ -11,6 +11,10 @@ void setup()
 void loop()
 {
   // Serial.println(GetColorHex(),HEX);
-  FollowLine(0.4,10000,Reverse);
+  while(FollowLine(0.4,500,Reverse))
+  {
+    delay(100);
+  }
+  while(true);
 }
 
