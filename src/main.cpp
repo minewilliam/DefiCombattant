@@ -13,7 +13,7 @@ void loop()
   while(!ROBUS_IsBumper(2));
   delay(1000);
   // Serial.println(GetColorHex(),HEX);
-  while(FollowLine(0.4,Reverse))
+  while(FollowLine(0.4, Reverse))
   {
     delay(100);
   }

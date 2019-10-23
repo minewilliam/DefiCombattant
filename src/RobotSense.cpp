@@ -12,7 +12,7 @@
 enum {Left, Right};
 enum {Forward, Reverse};
 
-int ReflectionSensorLeft,ReflectionSensorRight,ReflectionSensorCenter;
+int ReflectionSensorLeft, ReflectionSensorRight, ReflectionSensorCenter;
 
 void RobosenseInit()
 {
@@ -29,8 +29,7 @@ Color COLOR_Read()
 bool FollowLine(float SpeedCommand, bool Direction)
 {
   static int ReflectionSensorLeft_debounce, ReflectionSensorRight_debounce, ReflectionSensorCenter_debounce;
-  static bool Following = true;
-  static bool Following_debounce = true;
+  static bool Following = false;
   static bool NewFollower = true;
   static float DistanceDone = 0;
   static float Speed = 0;
@@ -47,7 +46,6 @@ bool FollowLine(float SpeedCommand, bool Direction)
     ReflectionSensorCenter_debounce = true;
     NewFollower = false;
     Following = true;
-    Following_debounce = true;
     DistanceDone = 0;
     Speed = 0;
     EncoderCountRight = 0;
@@ -63,32 +61,38 @@ bool FollowLine(float SpeedCommand, bool Direction)
     int SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
     int SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
 
-    if(ReflectionSensorLeft != SLeft)
-    {
-      if(ReflectionSensorLeft_debounce == SLeft)
-      {
-        ReflectionSensorLeft = SLeft;
-      }
-      ReflectionSensorLeft_debounce = SLeft;
-    }
+    ReflectionSensorLeft = SLeft;
+    ReflectionSensorRight = SRight;
+    ReflectionSensorCenter = SCenter;
 
-    if(ReflectionSensorRight != SRight)
-    {
-      if(ReflectionSensorRight_debounce == SRight)
-      {
-        ReflectionSensorRight = SRight;
-      }
-      ReflectionSensorRight_debounce = SRight;
-    }
+    // if(ReflectionSensorLeft != SLeft)
+    // {
+    //   if(ReflectionSensorLeft_debounce == SLeft)
+    //   {
+    //     ReflectionSensorLeft = SLeft;
+    //   }
+    //   ReflectionSensorLeft_debounce = SLeft;
+    // }
 
-    if(ReflectionSensorCenter != SCenter)
-    {
-      if(ReflectionSensorCenter_debounce == SCenter)
-      {
-        ReflectionSensorCenter = SCenter;
-      }
-      ReflectionSensorCenter_debounce = SCenter;
-    }
+    // if(ReflectionSensorRight != SRight)
+    // {
+    //   if(ReflectionSensorRight_debounce == SRight)
+    //   {
+    //     ReflectionSensorRight = SRight;
+    //   }
+    //   ReflectionSensorRight_debounce = SRight;
+    // }
+
+    // if(ReflectionSensorCenter != SCenter)
+    // {
+    //   if(ReflectionSensorCenter_debounce == SCenter)
+    //   {
+    //     ReflectionSensorCenter = SCenter;
+    //   }
+    //   ReflectionSensorCenter_debounce = SCenter;
+    // }
+
+    
 
     //End Read & Debounce
 
@@ -104,11 +108,7 @@ bool FollowLine(float SpeedCommand, bool Direction)
       Speed = 0.20;
     }
 
-    if(ReflectionSensorCenter&&ReflectionSensorRight&&ReflectionSensorLeft)
-    {
-      Following = false;
-    }
-    else if(!ReflectionSensorCenter&&!ReflectionSensorRight&&!ReflectionSensorLeft)
+    if(!ReflectionSensorCenter&&!ReflectionSensorRight&&!ReflectionSensorLeft)
     {
       Following = false;
     }
@@ -129,8 +129,7 @@ bool FollowLine(float SpeedCommand, bool Direction)
     }
     else
     {
-      AdjustLeft=0;
-      AdjustRight=0;
+      Following = false;
     }
    
     if (Direction == Reverse)
@@ -149,11 +148,10 @@ bool FollowLine(float SpeedCommand, bool Direction)
 
     DistanceDone = DistanceDone + (EncoderCountRight + EncoderCountLeft) / 2 / 133.4;
   }
-  else
+
+  if(!Following)
   {
     NewFollower = true;
-    ENCODER_Reset(Left);
-    ENCODER_Reset(Right);
   }
 
   return Following;
