@@ -93,14 +93,19 @@ void FollowLine(float SpeedCommand, float DistanceToDo, bool Direction)
       SpeedRight = 0.20;
     }
     
-    SpeedLeft = SpeedRight + (InstantError * Kp) + (CumuledError * Ki);
+    SpeedLeft = SpeedRight;
 
-
-    if(!ReflectionSensorCenter)
+    if(!ReflectionSensorLeft)
     {
       AdjustLeft = SpeedLeft;
       AdjustRight = SpeedRight;
     }
+    else
+    {
+      AdjustLeft = 0;
+      AdjustRight = 0;
+    }
+    
 
     // if(ReflectionSensorCenter)
     // {
@@ -144,9 +149,6 @@ void FollowLine(float SpeedCommand, float DistanceToDo, bool Direction)
     EncoderCountLeft = abs(ENCODER_ReadReset(Left));
 
     DistanceDone = DistanceDone + (EncoderCountRight + EncoderCountLeft) / 2 / 133.4;
-
-    InstantError = EncoderCountRight - EncoderCountLeft;
-    CumuledError = CumuledError + InstantError;
   }
 
   MOTOR_SetSpeed(Right, 0);
