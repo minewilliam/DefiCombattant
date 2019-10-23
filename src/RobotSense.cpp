@@ -26,9 +26,11 @@ Color COLOR_Read()
   return Red;
 }
 
-bool FollowLine(float SpeedCommand, float DistanceToDo, bool Direction)
+bool FollowLine(float SpeedCommand, bool Direction)
 {
+  static int ReflectionSensorLeft_debounce, ReflectionSensorRight_debounce, ReflectionSensorCenter_debounce;
   static bool Following = true;
+  static bool Following_debounce = true;
   static bool NewFollower = true;
   static float DistanceDone = 0;
   static float Speed = 0;
@@ -40,8 +42,12 @@ bool FollowLine(float SpeedCommand, float DistanceToDo, bool Direction)
   
   if(NewFollower)
   {
+    ReflectionSensorLeft_debounce = true;
+    ReflectionSensorRight_debounce = true;
+    ReflectionSensorCenter_debounce = true;
     NewFollower = false;
     Following = true;
+    Following_debounce = true;
     DistanceDone = 0;
     Speed = 0;
     EncoderCountRight = 0;
@@ -50,32 +56,63 @@ bool FollowLine(float SpeedCommand, float DistanceToDo, bool Direction)
     ENCODER_Reset(Right);
   }
 
-  if (DistanceDone < DistanceToDo)
+  if (Following)
   {
-    ReflectionSensorLeft = digitalRead(REFLECTION_SENSOR_LEFT);
-    ReflectionSensorRight = digitalRead(REFLECTION_SENSOR_RIGHT);
-    ReflectionSensorCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+    //Start Read & Debounce
+    int SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
+    int SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+    int SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
 
-    if (DistanceToDo - DistanceDone > 30 && Speed < SpeedCommand)
+    if(ReflectionSensorLeft != SLeft)
     {
-      Speed += + 0.03; //Acceleration
+      if(ReflectionSensorLeft_debounce == SLeft)
+      {
+        ReflectionSensorLeft = SLeft;
+      }
+      ReflectionSensorLeft_debounce = SLeft;
     }
 
-    else if (DistanceToDo - DistanceDone < 30 )
+    if(ReflectionSensorRight != SRight)
     {
-      Speed -= 0.03; //Deceleration
+      if(ReflectionSensorRight_debounce == SRight)
+      {
+        ReflectionSensorRight = SRight;
+      }
+      ReflectionSensorRight_debounce = SRight;
     }
-    else
+
+    if(ReflectionSensorCenter != SCenter)
     {
-      Speed = SpeedCommand;
+      if(ReflectionSensorCenter_debounce == SCenter)
+      {
+        ReflectionSensorCenter = SCenter;
+      }
+      ReflectionSensorCenter_debounce = SCenter;
     }
+
+    //End Read & Debounce
+
+    if (DistanceDone < 30 && Speed < SpeedCommand)
+    {
+      Speed += 0.03; //Acceleration
+    }
+
+    Speed = SpeedCommand;
     
     if (Speed < 0.20)
     {
       Speed = 0.20;
     }
 
-    if(!ReflectionSensorCenter)
+    if(ReflectionSensorCenter&&ReflectionSensorRight&&ReflectionSensorLeft)
+    {
+      Following = false;
+    }
+    else if(!ReflectionSensorCenter&&!ReflectionSensorRight&&!ReflectionSensorLeft)
+    {
+      Following = false;
+    }
+    else if(!ReflectionSensorCenter)
     {
       AdjustLeft = Speed;
       AdjustRight = Speed;
@@ -115,11 +152,6 @@ bool FollowLine(float SpeedCommand, float DistanceToDo, bool Direction)
   else
   {
     NewFollower = true;
-    Following = false;
-
-    MOTOR_SetSpeed(Right, 0);
-    MOTOR_SetSpeed(Left, 0);
-
     ENCODER_Reset(Left);
     ENCODER_Reset(Right);
   }

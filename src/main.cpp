@@ -10,11 +10,15 @@ void setup()
 
 void loop()
 {
+  while(!ROBUS_IsBumper(2));
+  delay(1000);
   // Serial.println(GetColorHex(),HEX);
-  while(FollowLine(0.4,500,Reverse))
+  while(FollowLine(0.4,Reverse))
   {
     delay(100);
   }
-  while(true);
+
+  MOTOR_SetSpeed(Right, 0);
+  MOTOR_SetSpeed(Left, 0);
 }
 

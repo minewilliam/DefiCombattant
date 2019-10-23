@@ -43,10 +43,9 @@ Color COLOR_Read();
  * @brief This function is used to move forward or backward the robot
  * 
  * @param SpeedCommand Speed 0 to 1
- * @param DistanceToDo Distance to do in centimeter
  * @param Direction 0 is forward and 1 is backward
  */
-bool FollowLine(float SpeedCommand, float DistanceToDo, bool Direction);
+bool FollowLine(float SpeedCommand, bool Direction);
 
 /**
  * @brief 
