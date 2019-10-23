@@ -12,8 +12,6 @@
 #include <Arduino.h>
 #include <LibRobus.h>
 
-#define Dumb
-
 void Turn(uint16_t Angle, bool Side)
 {
   bool ExitLeft = false;

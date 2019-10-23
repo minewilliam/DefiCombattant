@@ -8,21 +8,10 @@
  */
 
 #include "RobotSense.h"
-#include "Functions.h"
-
-GroveColorSensor ColorSensor;
 
 Color COLOR_Read()
 {
-    int R,G,B;
-    ColorSensor.ledStatus != ColorSensor.ledStatus;
-    ColorSensor.readRGB(&R,&G,&B);
-    Serial.println();
-    Serial.println(R);
-    Serial.println(G);
-    Serial.println(B);
-    ColorSensor.clearInterrupt();
-    return Red;
+
 }
 
 void FollowLine(float SpeedCommand, float DistanceToDo, bool Direction)

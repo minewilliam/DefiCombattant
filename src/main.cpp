@@ -7,7 +7,6 @@ void setup()
   BoardInit();
 }
 
-
 void loop()
 {
   Serial.println(GetColorHex(),HEX);

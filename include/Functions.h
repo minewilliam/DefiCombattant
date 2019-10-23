@@ -10,6 +10,8 @@
 #include <Arduino.h>
 #include <LibRobus.h>
 
+#define Dumb
+
 enum {Left, Right};
 enum {Forward, Reverse};
 
