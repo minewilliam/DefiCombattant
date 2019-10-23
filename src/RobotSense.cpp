@@ -154,6 +154,7 @@ bool FollowLine(float SpeedCommand, bool Direction)
     NewFollower = true;
   }
 
+
   return Following;
 }
 
