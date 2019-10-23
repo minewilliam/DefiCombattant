@@ -5,6 +5,7 @@
 void setup() 
 {
   BoardInit();
+  RobosenseInit();
 }
 
 void loop()

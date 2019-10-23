@@ -12,6 +12,12 @@
 
 #define Dumb
 
+#define REFLECTION_SENSOR_LEFT 41
+#define REFLECTION_SENSOR_RIGHT 42
+#define REFLECTION_SENSOR_CENTER 43
+
+int ReflectionSensorLeft,ReflectionSensorRight,ReflectionSensorCenter;
+
 enum {Left, Right};
 enum {Forward, Reverse};
 
@@ -24,6 +30,12 @@ enum Color
     Black,
     White
 };
+
+/**
+ * @brief Initializes pins on the arduino.
+ * 
+ */
+void RobosenseInit();
 
 /**
  * @brief Returns value from the color sensor

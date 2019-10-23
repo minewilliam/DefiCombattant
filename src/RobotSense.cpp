@@ -9,6 +9,13 @@
 
 #include "RobotSense.h"
 
+void RobosenseInit()
+{
+  pinMode(REFLECTION_SENSOR_RIGHT, INPUT);
+  pinMode(REFLECTION_SENSOR_LEFT, INPUT);
+  pinMode(REFLECTION_SENSOR_CENTER, INPUT);
+}
+
 Color COLOR_Read()
 {
 
@@ -44,7 +51,10 @@ void FollowLine(float SpeedCommand, float DistanceToDo, bool Direction)
   
   while (DistanceDone < DistanceToDo)
   {
-  
+    ReflectionSensorLeft != digitalRead(REFLECTION_SENSOR_LEFT);
+    ReflectionSensorRight != digitalRead(REFLECTION_SENSOR_RIGHT);
+    ReflectionSensorCenter != digitalRead(REFLECTION_SENSOR_CENTER);
+
     if (DistanceToDo - DistanceDone > 30 && SpeedRight < SpeedCommand)
     {
       SpeedRight = SpeedRight + 0.03; //Acceleration
@@ -65,7 +75,6 @@ void FollowLine(float SpeedCommand, float DistanceToDo, bool Direction)
       }
       Deceleration = 1;
     }
-
     else
     {
       SpeedRight = SpeedCommand;
@@ -77,6 +86,23 @@ void FollowLine(float SpeedCommand, float DistanceToDo, bool Direction)
     }
     
     SpeedLeft = SpeedRight + (InstantError * Kp) + (CumuledError * Ki);
+
+    if(!ReflectionSensorCenter)
+    {
+      if(ReflectionSensorLeft)
+      {
+        SpeedLeft = SpeedRight-0.1;
+      }
+      else if(ReflectionSensorRight)
+      {
+        SpeedRight = SpeedLeft-0.1;
+      }
+      else
+      {
+        SpeedLeft = 0;
+        SpeedRight = 0;
+      }
+    }
 
     if (Direction == Reverse)
     {
