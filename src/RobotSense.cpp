@@ -20,9 +20,7 @@ void RobosenseInit()
   pinMode(REFLECTION_SENSOR_LEFT, INPUT);
   pinMode(REFLECTION_SENSOR_CENTER, INPUT);
   pinMode(REFLECTION_SENSOR_UP, INPUT);
-   //Position de repo
   SERVO_SetAngle(0,30);
-  delay(3000);
 }
 
 Color COLOR_Read()
@@ -142,14 +140,25 @@ bool FollowLine(float SpeedCommand, bool Direction)
 
 void LeverUp(void)
 {
-    SERVO_Enable(0);
-    SERVO_SetAngle(0,0);
+  for (int i = 80; i > 30; i--)
+  {
+    SERVO_SetAngle(0,i);
+    delay(50);
+  }
+}
+
+void MoveBall(void)
+{
+  for (int i = 110; i > 80; i--)
+  {
+    SERVO_SetAngle(0,i);
+    delay(50);
+  }
 }
 
 void Impale(void)
 {
-    SERVO_Enable(0);
-    SERVO_SetAngle(0,90);
+  SERVO_SetAngle(0,110);
 }
 
 bool IRSensor()
@@ -162,13 +171,21 @@ bool IRSensor()
   }
 }
 
-void FindBall(){
-while(!IRSensor())
+void FindBall()
 {
-MOTOR_SetSpeed(Left, -0.2);
-MOTOR_SetSpeed(Right, -0.2);
-}
- SERVO_SetAngle(0,110);
-delay(200);
+  while(!IRSensor())
+  {
+    MOTOR_SetSpeed(Left, -0.2);
+    MOTOR_SetSpeed(Right, -0.2);
+  }
+
+    MOTOR_SetSpeed(Left, 0);
+    MOTOR_SetSpeed(Right, 0);
+
+    delay(500);
+
+    Impale();
+
+    delay(200);
 }
 

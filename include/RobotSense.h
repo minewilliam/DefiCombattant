@@ -91,3 +91,5 @@ void Impale(void);
 void FindLine (void);
 
 void FindBall(void);
+
+void MoveBall(void);
