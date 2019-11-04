@@ -86,3 +86,8 @@ void Impale(void);
  
  /**LEcteur infrarouge **/
  bool IRSensor(void);
+
+
+void FindLine (void);
+
+void FindBall(void);

@@ -134,7 +134,7 @@ void Move(float SpeedCommand, float DistanceToDo, bool Direction)
       SpeedRight = SpeedRight + 0.03; //Acceleration
     }
 
-    else if (DistanceToDo - DistanceDone < 30 )
+    else if (DistanceToDo - DistanceDone <= 30 )
     {
       SpeedRight = SpeedRight - 0.03; //Deceleration
       if (Deceleration == 0)

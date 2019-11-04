@@ -20,6 +20,9 @@ void RobosenseInit()
   pinMode(REFLECTION_SENSOR_LEFT, INPUT);
   pinMode(REFLECTION_SENSOR_CENTER, INPUT);
   pinMode(REFLECTION_SENSOR_UP, INPUT);
+   //Position de repo
+  SERVO_SetAngle(0,30);
+  delay(3000);
 }
 
 Color COLOR_Read()
@@ -56,14 +59,37 @@ Color COLOR_Read()
   {
     return Yellow;
   }
+
+  return Yellow;
+}
+
+void FindLine (void)
+{
+  int SRight = 1;
+
+  /*Avance*/
+  MOTOR_SetSpeed(Right, -0.3);
+  MOTOR_SetSpeed(Left, -0.3);
+
+  /*Arrete lorsqu'il trouve une ligne*/
+  while (SRight)
+  {
+    SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+    if (!SRight)
+    {
+      delay(20);
+      SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+    }
+  }
+
+  /*Stop*/
+  MOTOR_SetSpeed(Right, 0);
+  MOTOR_SetSpeed(Left, 0);
 }
 
 bool FollowLine(float SpeedCommand, bool Direction)
 {
-  static float DistanceDone = 0;
   static float Speed = 0;
-  static int EncoderCountRight = 0;
-  static int EncoderCountLeft = 0;
 
   float AdjustRight = 0;
   float AdjustLeft = 0;
@@ -72,11 +98,6 @@ bool FollowLine(float SpeedCommand, bool Direction)
   int SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
   int SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
   
-  if (DistanceDone < 30 && Speed < SpeedCommand)
-  {
-    Speed += 0.03; //Acceleration
-  }
-
   Speed = SpeedCommand;
   
   if (Speed < 0.20)
@@ -116,11 +137,6 @@ bool FollowLine(float SpeedCommand, bool Direction)
     MOTOR_SetSpeed(Left, AdjustLeft);
   }
 
-  EncoderCountRight = abs(ENCODER_ReadReset(Right));
-  EncoderCountLeft = abs(ENCODER_ReadReset(Left));
-
-  DistanceDone = DistanceDone + (EncoderCountRight + EncoderCountLeft) / 2 / 133.4;
-  
   return 0;
 }
 
@@ -146,12 +162,13 @@ bool IRSensor()
   }
 }
 
-
-
-
-void setup()  
+void FindBall(){
+while(!IRSensor())
 {
-  BoardInit();
-  RobosenseInit();
+MOTOR_SetSpeed(Left, -0.2);
+MOTOR_SetSpeed(Right, -0.2);
+}
+ SERVO_SetAngle(0,110);
+delay(200);
 }
 
