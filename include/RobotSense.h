@@ -9,12 +9,24 @@
 
 #include <Arduino.h>
 #include <LibRobus.h>
+#include <Adafruit_TCS34725.h>
 
 #define Dumb
+
+#define colorA 
+#define colorB
+
+#define N_E Yellow
+#define N_W Blue
+#define S_E Red
+#define S_W Green
 
 #define REFLECTION_SENSOR_LEFT 43
 #define REFLECTION_SENSOR_RIGHT 41
 #define REFLECTION_SENSOR_CENTER 42
+#define REFLECTION_SENSOR_UP 40
+
+
 
 enum Color
 {
@@ -72,3 +84,5 @@ void LeverUp(void);
  */
 void Impale(void);
  
+ /**LEcteur infrarouge **/
+ bool IRSensor(void);
