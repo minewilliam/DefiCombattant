@@ -190,3 +190,453 @@ void Move(float SpeedCommand, float DistanceToDo, bool Direction)
   ENCODER_Reset(Left);
   ENCODER_Reset(Right);
 }
+
+void GetBallOne (void)
+{
+  int SLeft, SCenter, SRight = 0;
+
+  Turn(90,Left);
+  FindLine(Right);
+  Move(0.4,15,Reverse);
+  delay(100);
+  Turn(45,Right);
+  
+  while (!SLeft || !SCenter || !SRight)
+  {
+    SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
+    SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+    SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+
+    if (SLeft && SCenter && SRight)
+    {
+      delay (20);
+      SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
+      SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+      SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+    }
+  
+    FollowLine(0.4, Reverse);
+  }
+
+FindBall();
+MoveBall();
+
+Move(0.4, 10, Forward);
+
+Turn(150,Left);
+MOTOR_SetSpeed(Left, -0.2);
+MOTOR_SetSpeed(Right, 0.2);
+delay (500);
+while (SCenter)
+{
+  SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+}
+
+while (SLeft || SCenter || SRight)
+  {
+    SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
+    SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+    SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+
+    if (!SLeft && !SCenter && !SRight)
+    {
+      delay (20);
+      SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
+      SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+      SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+    }
+  
+    FollowLine(0.4, Reverse);
+  }
+
+  MOTOR_SetSpeed(Left, 0);
+  MOTOR_SetSpeed(Right, 0);
+  LeverUp();
+
+  Move(1, 30, Forward);
+  Turn(45,Left);
+  Move(1, 30, Forward);
+  Turn(90,Left);
+  Move(1, 30, Forward);
+}
+
+void GetBallTwo (void)
+{
+  int SLeft, SCenter, SRight = 0;
+
+  Turn(90,Right);
+  FindLine(Left);
+  Move(0.4,15,Reverse);
+  delay(100);
+  Turn(45,Left);
+  
+  while (!SLeft || !SCenter || !SRight)
+  {
+    SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
+    SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+    SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+
+    if (SLeft && SCenter && SRight)
+    {
+      delay (20);
+      SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
+      SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+      SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+    }
+  
+    FollowLine(0.4, Reverse);
+  }
+
+FindBall();
+MoveBall();
+
+Move(0.4, 10, Forward);
+
+Turn(150,Left);
+MOTOR_SetSpeed(Left, -0.2);
+MOTOR_SetSpeed(Right, 0.2);
+delay (500);
+while (SCenter)
+{
+  SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+}
+
+while (SLeft || SCenter || SRight)
+  {
+    SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
+    SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+    SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+
+    if (!SLeft && !SCenter && !SRight)
+    {
+      delay (20);
+      SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
+      SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+      SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+    }
+  
+    FollowLine(0.4, Reverse);
+  }
+
+  MOTOR_SetSpeed(Left, 0);
+  MOTOR_SetSpeed(Right, 0);
+  LeverUp();
+
+  Move(1, 30, Forward);
+  Turn(45,Left);
+  Move(1, 30, Forward);
+  Turn(90,Left);
+  Move(1, 30, Forward);
+}
+
+void GetBallThree (void)
+{
+  int SLeft, SCenter, SRight = 0;
+
+  Turn(90,Left);
+  FindLine(Right);
+  Move(0.4,15,Reverse);
+  Turn(100,Left);
+  Move(0.4,40,Reverse);
+  FindLine(Right);
+  Move(0.4,15,Reverse);
+  Turn(50,Right);
+  
+  while (!SLeft || !SCenter || !SRight)
+  {
+    SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
+    SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+    SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+
+    if (SLeft && SCenter && SRight)
+    {
+      delay (100);
+      SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
+      SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+      SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+    }
+  
+    FollowLine(0.4, Reverse);
+  }
+
+FindBall();
+MoveBall();
+
+Move(0.4, 10, Forward);
+
+Turn(150,Left);
+MOTOR_SetSpeed(Left, -0.2);
+MOTOR_SetSpeed(Right, 0.2);
+delay (500);
+while (SCenter)
+{
+  SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+}
+
+while (SLeft || SCenter || SRight)
+  {
+    SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
+    SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+    SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+
+    if (!SLeft && !SCenter && !SRight)
+    {
+      delay (20);
+      SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
+      SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+      SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+    }
+  
+    FollowLine(0.4, Reverse);
+  }
+
+  MOTOR_SetSpeed(Left, 0);
+  MOTOR_SetSpeed(Right, 0);
+  LeverUp();
+
+  Move(1, 30, Forward);
+  Turn(45,Left);
+  Move(1, 30, Forward);
+  Turn(90,Left);
+  Move(1, 30, Forward);
+}
+
+void GetBallFour (void)
+{
+  int SLeft, SCenter, SRight = 0;
+
+  Turn(90,Right);
+  FindLine(Left);
+  Move(0.4,15,Reverse);
+  Turn(100,Right);
+  Move(0.4,40,Reverse);
+  FindLine(Left);
+  Move(0.4,15,Reverse);
+  Turn(50,Left);
+  
+  while (!SLeft || !SCenter || !SRight)
+  {
+    SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
+    SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+    SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+
+    if (SLeft && SCenter && SRight)
+    {
+      delay (100);
+      SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
+      SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+      SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+    }
+  
+    FollowLine(0.4, Reverse);
+  }
+
+FindBall();
+MoveBall();
+
+Move(0.4, 10, Forward);
+
+Turn(150,Left);
+MOTOR_SetSpeed(Left, -0.2);
+MOTOR_SetSpeed(Right, 0.2);
+delay (500);
+while (SCenter)
+{
+  SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+}
+
+while (SLeft || SCenter || SRight)
+  {
+    SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
+    SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+    SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+
+    if (!SLeft && !SCenter && !SRight)
+    {
+      delay (20);
+      SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
+      SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+      SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+    }
+  
+    FollowLine(0.4, Reverse);
+  }
+
+  MOTOR_SetSpeed(Left, 0);
+  MOTOR_SetSpeed(Right, 0);
+  LeverUp();
+
+  Move(1, 30, Forward);
+  Turn(45,Left);
+  Move(1, 30, Forward);
+  Turn(90,Left);
+  Move(1, 30, Forward);
+}
+
+void LeaveBallOne(void)
+{
+  int SLeft, SCenter, SRight = 0;
+
+  Turn(180,Left);
+  FindBall();
+  MoveBall();
+  Move(0.4,15,Forward);
+  Move(0.5,75,Reverse); 
+  Turn(90,Left);
+  FindLine(Right);
+  Move(0.4,15,Reverse);
+  delay(100);
+  Turn(45,Right);
+  
+  while (!SLeft || !SCenter || !SRight)
+  {
+    SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
+    SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+    SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+
+    if (SLeft && SCenter && SRight)
+    {
+      delay (20);
+      SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
+      SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+      SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+    }
+  
+    FollowLine(0.4, Reverse);
+  }
+  Move(0.4,30,Reverse);
+
+  MOTOR_SetSpeed(Left, 0);
+  MOTOR_SetSpeed(Right, 0);
+  LeverUp();
+
+  Move(0.4,35,Forward);
+  Turn(180,Left);
+  FollowLine(0.4,Reverse);
+}
+
+void LeaveBallTwo(void)
+{
+  int SLeft, SCenter, SRight = 0;
+
+  Turn(180,Left);
+  FindBall();
+  MoveBall();
+  Move(0.4,15,Forward);
+  Move(0.5,75,Reverse); 
+  Turn(90,Left);
+  FindLine(Right);
+  Move(0.4,15,Reverse);
+  delay(100);
+  Turn(45,Right);
+  
+  while (!SLeft || !SCenter || !SRight)
+  {
+    SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
+    SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+    SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+
+    if (SLeft && SCenter && SRight)
+    {
+      delay (20);
+      SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
+      SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+      SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+    }
+  
+    FollowLine(0.4, Reverse);
+  }
+  Move(0.4,30,Reverse);
+
+  MOTOR_SetSpeed(Left, 0);
+  MOTOR_SetSpeed(Right, 0);
+  LeverUp();
+
+  Move(0.4,35,Forward);
+  Turn(180,Left);
+  FollowLine(0.4,Reverse);
+}
+
+void LeaveBallThree(void)
+{
+  int SLeft, SCenter, SRight = 0;
+
+  Turn(180,Left);
+  FindBall();
+  MoveBall();
+  Move(0.4,15,Forward);
+  Move(0.5,75,Reverse); 
+  Turn(90,Left);
+  FindLine(Right);
+  Move(0.4,15,Reverse);
+  delay(100);
+  Turn(45,Right);
+  
+  while (!SLeft || !SCenter || !SRight)
+  {
+    SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
+    SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+    SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+
+    if (SLeft && SCenter && SRight)
+    {
+      delay (20);
+      SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
+      SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+      SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+    }
+  
+    FollowLine(0.4, Reverse);
+  }
+  Move(0.4,30,Reverse);
+
+  MOTOR_SetSpeed(Left, 0);
+  MOTOR_SetSpeed(Right, 0);
+  LeverUp();
+
+  Move(0.4,35,Forward);
+  Turn(180,Left);
+  FollowLine(0.4,Reverse);
+}
+
+void LeaveBallFour(void)
+{
+  int SLeft, SCenter, SRight = 0;
+
+  Turn(180,Left);
+  FindBall();
+  MoveBall();
+  Move(0.4,15,Forward);
+  Move(0.5,75,Reverse); 
+  Turn(90,Left);
+  FindLine(Right);
+  Move(0.4,15,Reverse);
+  delay(100);
+  Turn(45,Right);
+  
+  while (!SLeft || !SCenter || !SRight)
+  {
+    SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
+    SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+    SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+
+    if (SLeft && SCenter && SRight)
+    {
+      delay (20);
+      SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
+      SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+      SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+    }
+  
+    FollowLine(0.4, Reverse);
+  }
+  Move(0.4,30,Reverse);
+
+  MOTOR_SetSpeed(Left, 0);
+  MOTOR_SetSpeed(Right, 0);
+  LeverUp();
+
+  Move(0.4,35,Forward);
+  Turn(180,Left);
+  FollowLine(0.4,Reverse);
+}

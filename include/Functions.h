@@ -9,6 +9,7 @@
 
 #include <Arduino.h>
 #include <LibRobus.h>
+#include "RobotSense.h"
 
 #define Dumb
 
@@ -32,3 +33,13 @@ void Turn(uint16_t Angle, bool Side);
 * @return 		none
 */
 void Move(float SpeedCommand, float DistanceToDo, bool Direction);
+
+void GetBallOne (void);
+void GetBallTwo (void);
+void GetBallThree (void);
+void GetBallFour (void);
+
+void LeaveBallOne(void);
+void LeaveBallTwo(void);
+void LeaveBallThree(void);
+void LeaveBallFour(void);

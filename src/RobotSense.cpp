@@ -23,53 +23,15 @@ void RobosenseInit()
   SERVO_SetAngle(0,30);
 }
 
-Color COLOR_Read()
-{
-  uint32_t RGB;
-  uint8_t red, blue, green;
-
-  RGB=GetColorHex();
-  blue=(RGB&0xFF);
-  green=(RGB&0xFF00)>>8;
-  red=(RGB&0xFF0000)>>16;
-
-  if (blue>0xE1 && green>0xE1 && red>0xE1)
-  {
-    return White; 
-  }
-  
-  if (blue<0x50 && green<0x50 && red>0x90)
-  {
-    return Red;
-  }
-  
-  if (blue<0x60 && green>0x60 && red<0x30)
-  {
-    return Green;
-  }
-  
-  if (blue>0x90 && green<0x60 && red<0x20)
-  {
-    return Blue;
-  }
-  
-  if (blue<0x30 && green>0x60 && red>0x60)
-  {
-    return Yellow;
-  }
-
-  return Yellow;
-}
-
 void FindLine (bool Side)
 {
   int SRight, SLeft = 1;
 
   /*Avance*/
-  MOTOR_SetSpeed(Right, -0.3);
-  MOTOR_SetSpeed(Left, -0.3);
+  MOTOR_SetSpeed(Right, -0.2);
+  MOTOR_SetSpeed(Left, -0.2);
 
-  /*Arrete lorsqu'il trouve une ligne*/
+  /*Boucle jusqu'à temps qu'il trouve une ligne*/
   if (Side == Right)
   {
     while (SRight)
@@ -90,20 +52,34 @@ void FindLine (bool Side)
       SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
       if (!SLeft)
       {
-        delay(20);
+        delay(100);
         SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
       }
     }
   }
   
-  
-
   /*Stop*/
   MOTOR_SetSpeed(Right, 0);
   MOTOR_SetSpeed(Left, 0);
 }
 
-bool FollowLine(float SpeedCommand, bool Direction)
+void FindBall()
+{
+  while(!IRSensor())
+  {
+    MOTOR_SetSpeed(Left, -0.2);
+    MOTOR_SetSpeed(Right, -0.2);
+  }
+
+    MOTOR_SetSpeed(Left, 0);
+    MOTOR_SetSpeed(Right, 0);
+
+    Impale();
+
+    delay(200);
+}
+
+void FollowLine(float SpeedCommand, bool Direction)
 {
   static float Speed = 0;
 
@@ -152,31 +128,55 @@ bool FollowLine(float SpeedCommand, bool Direction)
     MOTOR_SetSpeed(Right, AdjustRight);
     MOTOR_SetSpeed(Left, AdjustLeft);
   }
-
-  return 0;
 }
 
 void LeverUp(void)
 {
-  for (int i = 80; i > 30; i--)
-  {
-    SERVO_SetAngle(0,i);
-    delay(50);
-  }
+  #ifdef Dumb
+    for (int i = 80; i > 30; i--)
+    {
+      SERVO_SetAngle(0,i);
+      delay(50);
+    }
+  #endif  
+
+  #ifdef Dumber
+    for (int i = 40; i > 10; i--)
+    {
+      SERVO_SetAngle(0,i);
+      delay(50);
+    }
+  #endif  
 }
 
 void MoveBall(void)
 {
-  for (int i = 110; i > 80; i--)
-  {
-    SERVO_SetAngle(0,i);
-    delay(50);
-  }
+  #ifdef Dumber
+    for (int i = 110; i > 80; i--)
+    {
+      SERVO_SetAngle(0,i);
+      delay(50);
+    }
+  #endif  
+
+  #ifdef Dumber
+    for (int i = 65; i > 40; i--)
+    {
+      SERVO_SetAngle(0,i);
+      delay(50);
+    }
+  #endif 
 }
 
 void Impale(void)
 {
-  SERVO_SetAngle(0,110);
+  #ifdef Dumber
+    SERVO_SetAngle(0,110);
+  #endif  
+
+  #ifdef Dumber
+    SERVO_SetAngle(0,65);
+  #endif 
 }
 
 bool IRSensor()
@@ -188,20 +188,3 @@ bool IRSensor()
     return 0;
   }
 }
-
-void FindBall()
-{
-  while(!IRSensor())
-  {
-    MOTOR_SetSpeed(Left, -0.2);
-    MOTOR_SetSpeed(Right, -0.2);
-  }
-
-    MOTOR_SetSpeed(Left, 0);
-    MOTOR_SetSpeed(Right, 0);
-
-    Impale();
-
-    delay(200);
-}
-
