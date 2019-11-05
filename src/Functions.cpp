@@ -193,68 +193,41 @@ void Move(float SpeedCommand, float DistanceToDo, bool Direction)
 
 int16_t LocateBall(void)
 {
-  const float rangeMax = 800;
-  const float rangeMin = 200;
-  const uint16_t turnAngle_Max = 30;
-  const int turnIncrement = 5; //Increment in degrees
+  const float rangeMax = 80;
+  const float rangeMin = 20;
+  const uint16_t turnAngle_Max = 20;
+  const int turnIncrement = 1; //Increment in degrees
 
   int16_t angleOut = 0;
   bool ballFound = false;
-  bool turnDirection = RIGHT;
   uint16_t turnAngle = 0;
   float range = 10000;
 
+  Turn(turnAngle_Max, RIGHT);
+
   while(!ballFound)
   {
-    float currentRange = SONAR_GetRange(0)
-
-    if(rangeMin >= currentRange <= rangeMax)
+    float currentRange = SONAR_GetRange(0);
+    if(rangeMin <= currentRange && currentRange <= rangeMax)
     {
       if(currentRange < range)
       {
         range = currentRange;
-
-        if(turnDirection == RIGHT)
-        {
-          angleOut = turnAngle;
-        }
-        else
-        {
-          angleOut = -turnAngle
-        }
+        angleOut = turnAngle_Max-turnAngle;
+        Serial.print("Angle out: ");
+        Serial.println(angleOut);
       }
     }
 
-    if(turnDirection == RIGHT)
+    if(turnAngle >= turnAngle_Max*2)
     {
-      if(turnAngle >= turnAngle_Max)
-      {
-        Turn(turnAngle_Max,LEFT);
-        turnAngle = 0;
-        turnDirection = LEFT;
-      }
-    }
-    else
-    {
-      if(turnAngle >= turnAngle_Max)
-      {
-        Turn(turnAngle_Max,RIGHT);
-        if(rangeMin >= currentRange <= rangeMax)
-        {
-          ballFound = true;
-        }
-        else
-        {
-          turnAngle = 0;
-          turnDirection = RIGHT;
-        }
-        
-      }
+      Turn(turnAngle_Max,RIGHT);
+      ballFound = true;
     }
     
     if(!ballFound)
     {
-      Turn(turnIncrement, turnDirection);
+      Turn(turnIncrement, LEFT);
       turnAngle += turnIncrement;
     }
   }

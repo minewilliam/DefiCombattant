@@ -11,7 +11,7 @@
 #include <LibRobus.h>
 #include "RobotSense.h"
 
-#define Dumber
+#define Dumb
 
 enum {Left, Right};
 enum {Forward, Reverse};

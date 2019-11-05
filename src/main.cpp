@@ -2,7 +2,7 @@
 #include "RobotSense.h"
 #include "Adafruit_TCS34725.h"
 
-#define Dumber
+#define Dumb
 #define One
 
 void setup() 
@@ -15,6 +15,20 @@ void loop()
 {
   while (!ROBUS_IsBumper(2));
 
+  int16_t whereThatBallAt = LocateBall();
+
+  if(whereThatBallAt < 0)
+  {
+    Turn(whereThatBallAt+180, RIGHT);
+  }
+  else
+  {
+    Turn(whereThatBallAt+180, LEFT);
+  }
+  
+
+
+  /*
   #ifdef Dumb
     #ifdef One
       GetBallOne();
@@ -49,7 +63,7 @@ void loop()
     #ifdef Four
      LeaveBallFour();
     #endif
-  #endif
+  #endif*/
   
-  while (1);
+  //while (1);
 }
