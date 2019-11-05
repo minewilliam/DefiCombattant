@@ -2,9 +2,8 @@
 #include "RobotSense.h"
 #include "Adafruit_TCS34725.h"
 
-#define Dumb
-#define A_Four
-#define B_One
+#define Dumber
+#define One
 
 void setup() 
 {
@@ -14,38 +13,40 @@ void setup()
 
 void loop()
 {
+  while (!ROBUS_IsBumper(2));
+
   #ifdef Dumb
-    #ifdef A_One
+    #ifdef One
       GetBallOne();
     #endif
 
-    #ifdef A_Two
+    #ifdef Two
       GetBallTwo();
     #endif
 
-    #ifdef A_Three
+    #ifdef Three
       GetBallThree();
     #endif
 
-    #ifdef A_Four
+    #ifdef Four
       GetBallFour();
     #endif
   #endif
 
   #ifdef Dumber
-    #ifdef B_One
+    #ifdef One
      LeaveBallOne();
     #endif
 
-    #ifdef B_Two
+    #ifdef Two
       LeaveBallTwo();
     #endif
 
-    #ifdef B_Three
+    #ifdef Three
      LeaveBallThree();
     #endif
 
-    #ifdef B_Four
+    #ifdef Four
      LeaveBallFour();
     #endif
   #endif

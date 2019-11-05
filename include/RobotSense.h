@@ -11,7 +11,7 @@
 #include <LibRobus.h>
 #include <Adafruit_TCS34725.h>
 
-#define Dumb
+#define Dumber
 
 #define REFLECTION_SENSOR_LEFT 43
 #define REFLECTION_SENSOR_RIGHT 41

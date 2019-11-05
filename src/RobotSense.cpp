@@ -12,8 +12,6 @@
 enum {Left, Right};
 enum {Forward, Reverse};
 
-int ReflectionSensorLeft,ReflectionSensorRight,ReflectionSensorCenter;
-
 void RobosenseInit()
 {
   pinMode(REFLECTION_SENSOR_RIGHT, INPUT);
@@ -151,7 +149,7 @@ void LeverUp(void)
 
 void MoveBall(void)
 {
-  #ifdef Dumber
+  #ifdef Dumb
     for (int i = 110; i > 80; i--)
     {
       SERVO_SetAngle(0,i);
@@ -170,12 +168,12 @@ void MoveBall(void)
 
 void Impale(void)
 {
-  #ifdef Dumber
+  #ifdef Dumb
     SERVO_SetAngle(0,110);
   #endif  
 
   #ifdef Dumber
-    SERVO_SetAngle(0,65);
+    SERVO_SetAngle(0,55);
   #endif 
 }
 

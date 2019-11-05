@@ -481,7 +481,7 @@ void LeaveBallOne(void)
   FindBall();
   MoveBall();
   Move(0.4,15,Forward);
-  Move(0.5,75,Reverse); 
+  Move(0.4,75,Reverse); 
   Turn(90,Left);
   FindLine(Right);
   Move(0.4,15,Reverse);
