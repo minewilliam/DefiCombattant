@@ -77,7 +77,7 @@ void FindLine (bool Side)
       SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
       if (!SRight)
       {
-        delay(20);
+        delay(100);
         SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
       }
     }
@@ -199,8 +199,6 @@ void FindBall()
 
     MOTOR_SetSpeed(Left, 0);
     MOTOR_SetSpeed(Right, 0);
-
-    delay(500);
 
     Impale();
 
