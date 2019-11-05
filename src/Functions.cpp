@@ -191,6 +191,76 @@ void Move(float SpeedCommand, float DistanceToDo, bool Direction)
   ENCODER_Reset(Right);
 }
 
+int16_t LocateBall(void)
+{
+  const float rangeMax = 800;
+  const float rangeMin = 200;
+  const uint16_t turnAngle_Max = 30;
+  const int turnIncrement = 5; //Increment in degrees
+
+  int16_t angleOut = 0;
+  bool ballFound = false;
+  bool turnDirection = RIGHT;
+  uint16_t turnAngle = 0;
+  float range = 10000;
+
+  while(!ballFound)
+  {
+    float currentRange = SONAR_GetRange(0)
+
+    if(rangeMin >= currentRange <= rangeMax)
+    {
+      if(currentRange < range)
+      {
+        range = currentRange;
+
+        if(turnDirection == RIGHT)
+        {
+          angleOut = turnAngle;
+        }
+        else
+        {
+          angleOut = -turnAngle
+        }
+      }
+    }
+
+    if(turnDirection == RIGHT)
+    {
+      if(turnAngle >= turnAngle_Max)
+      {
+        Turn(turnAngle_Max,LEFT);
+        turnAngle = 0;
+        turnDirection = LEFT;
+      }
+    }
+    else
+    {
+      if(turnAngle >= turnAngle_Max)
+      {
+        Turn(turnAngle_Max,RIGHT);
+        if(rangeMin >= currentRange <= rangeMax)
+        {
+          ballFound = true;
+        }
+        else
+        {
+          turnAngle = 0;
+          turnDirection = RIGHT;
+        }
+        
+      }
+    }
+    
+    if(!ballFound)
+    {
+      Turn(turnIncrement, turnDirection);
+      turnAngle += turnIncrement;
+    }
+  }
+  return angleOut;
+}
+
 void GetBallOne (void)
 {
   int SLeft, SCenter, SRight = 0;
@@ -218,21 +288,21 @@ void GetBallOne (void)
     FollowLine(0.4, Reverse);
   }
 
-FindBall();
-MoveBall();
+  FindBall();
+  MoveBall();
 
-Move(0.4, 10, Forward);
+  Move(0.4, 10, Forward);
 
-Turn(150,Left);
-MOTOR_SetSpeed(Left, -0.2);
-MOTOR_SetSpeed(Right, 0.2);
-delay (500);
-while (SCenter)
-{
-  SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
-}
+  Turn(150,Left);
+  MOTOR_SetSpeed(Left, -0.2);
+  MOTOR_SetSpeed(Right, 0.2);
+  delay (500);
+  while (SCenter)
+  {
+    SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+  }
 
-while (SLeft || SCenter || SRight)
+  while (SLeft || SCenter || SRight)
   {
     SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
     SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
@@ -287,21 +357,21 @@ void GetBallTwo (void)
     FollowLine(0.4, Reverse);
   }
 
-FindBall();
-MoveBall();
+  FindBall();
+  MoveBall();
 
-Move(0.4, 10, Forward);
+  Move(0.4, 10, Forward);
 
-Turn(150,Left);
-MOTOR_SetSpeed(Left, -0.2);
-MOTOR_SetSpeed(Right, 0.2);
-delay (500);
-while (SCenter)
-{
-  SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
-}
+  Turn(150,Left);
+  MOTOR_SetSpeed(Left, -0.2);
+  MOTOR_SetSpeed(Right, 0.2);
+  delay (500);
+  while (SCenter)
+  {
+    SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+  }
 
-while (SLeft || SCenter || SRight)
+  while (SLeft || SCenter || SRight)
   {
     SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
     SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
@@ -359,21 +429,21 @@ void GetBallThree (void)
     FollowLine(0.4, Reverse);
   }
 
-FindBall();
-MoveBall();
+  FindBall();
+  MoveBall();
 
-Move(0.4, 10, Forward);
+  Move(0.4, 10, Forward);
 
-Turn(150,Left);
-MOTOR_SetSpeed(Left, -0.2);
-MOTOR_SetSpeed(Right, 0.2);
-delay (500);
-while (SCenter)
-{
-  SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
-}
+  Turn(150,Left);
+  MOTOR_SetSpeed(Left, -0.2);
+  MOTOR_SetSpeed(Right, 0.2);
+  delay (500);
+  while (SCenter)
+  {
+    SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+  }
 
-while (SLeft || SCenter || SRight)
+  while (SLeft || SCenter || SRight)
   {
     SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
     SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
@@ -431,21 +501,21 @@ void GetBallFour (void)
     FollowLine(0.4, Reverse);
   }
 
-FindBall();
-MoveBall();
+  FindBall();
+  MoveBall();
 
-Move(0.4, 10, Forward);
+  Move(0.4, 10, Forward);
 
-Turn(150,Left);
-MOTOR_SetSpeed(Left, -0.2);
-MOTOR_SetSpeed(Right, 0.2);
-delay (500);
-while (SCenter)
-{
-  SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
-}
+  Turn(150,Left);
+  MOTOR_SetSpeed(Left, -0.2);
+  MOTOR_SetSpeed(Right, 0.2);
+  delay (500);
+  while (SCenter)
+  {
+    SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
+  }
 
-while (SLeft || SCenter || SRight)
+  while (SLeft || SCenter || SRight)
   {
     SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
     SCenter = digitalRead(REFLECTION_SENSOR_CENTER);

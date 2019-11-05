@@ -34,6 +34,13 @@ void Turn(uint16_t Angle, bool Side);
 */
 void Move(float SpeedCommand, float DistanceToDo, bool Direction);
 
+/**
+ * @brief This function rotates the robpt and tries 
+ * 
+ * @return uint16_t Angle of the ball in front of the robot
+ */
+int16_t LocateBall(void);
+
 void GetBallOne (void);
 void GetBallTwo (void);
 void GetBallThree (void);
