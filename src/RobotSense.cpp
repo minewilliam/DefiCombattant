@@ -61,24 +61,42 @@ Color COLOR_Read()
   return Yellow;
 }
 
-void FindLine (void)
+void FindLine (bool Side)
 {
-  int SRight = 1;
+  int SRight, SLeft = 1;
 
   /*Avance*/
   MOTOR_SetSpeed(Right, -0.3);
   MOTOR_SetSpeed(Left, -0.3);
 
   /*Arrete lorsqu'il trouve une ligne*/
-  while (SRight)
+  if (Side == Right)
   {
-    SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
-    if (!SRight)
+    while (SRight)
     {
-      delay(20);
       SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+      if (!SRight)
+      {
+        delay(20);
+        SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
+      }
     }
   }
+
+  else
+  {
+    while (SLeft)
+    {
+      SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
+      if (!SLeft)
+      {
+        delay(20);
+        SLeft = digitalRead(REFLECTION_SENSOR_LEFT);
+      }
+    }
+  }
+  
+  
 
   /*Stop*/
   MOTOR_SetSpeed(Right, 0);

@@ -88,7 +88,7 @@ void Impale(void);
  bool IRSensor(void);
 
 
-void FindLine (void);
+void FindLine (bool Side);
 
 void FindBall(void);
 
