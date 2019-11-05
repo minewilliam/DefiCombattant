@@ -173,7 +173,7 @@ void Impale(void)
   #endif  
 
   #ifdef Dumber
-    SERVO_SetAngle(0,55);
+    SERVO_SetAngle(0,70);
   #endif 
 }
 
