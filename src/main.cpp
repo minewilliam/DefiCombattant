@@ -3,7 +3,7 @@
 #include "Adafruit_TCS34725.h"
 
 #define Dumber
-#define One
+#define Four
 
 void setup() 
 {

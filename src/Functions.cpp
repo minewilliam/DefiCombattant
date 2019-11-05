@@ -551,8 +551,9 @@ void LeaveBallOne(void)
   FindBall();
   MoveBall();
   Move(0.4,15,Forward);
-  Move(0.4,75,Reverse); 
-  Turn(90,Left);
+  Turn(180,Right);
+  Move(0.4,90,Forward);
+  Turn(85,Right);
   FindLine(Right);
   Move(0.4,15,Reverse);
   delay(100);
@@ -574,15 +575,17 @@ void LeaveBallOne(void)
   
     FollowLine(0.4, Reverse);
   }
-  Move(0.4,30,Reverse);
+  Move(0.4,50,Reverse);
 
   MOTOR_SetSpeed(Left, 0);
   MOTOR_SetSpeed(Right, 0);
+  
   LeverUp();
 
-  Move(0.4,35,Forward);
-  Turn(180,Left);
-  FollowLine(0.4,Reverse);
+  Move(0.4,5,Forward);
+
+  MOTOR_SetSpeed(Left, 0);
+  MOTOR_SetSpeed(Right, 0);
 }
 
 void LeaveBallTwo(void)
@@ -593,12 +596,14 @@ void LeaveBallTwo(void)
   FindBall();
   MoveBall();
   Move(0.4,15,Forward);
-  Move(0.5,75,Reverse); 
-  Turn(90,Left);
-  FindLine(Right);
+  Turn(180,Right);
+  Move(0.4,90,Forward);
+  Turn(75,Left);
+  Move(0.4,10,Reverse);
+  FindLine(Left);
   Move(0.4,15,Reverse);
   delay(100);
-  Turn(45,Right);
+  Turn(45,Left);
   
   while (!SLeft || !SCenter || !SRight)
   {
@@ -616,15 +621,17 @@ void LeaveBallTwo(void)
   
     FollowLine(0.4, Reverse);
   }
-  Move(0.4,30,Reverse);
+  Move(0.4,50,Reverse);
 
   MOTOR_SetSpeed(Left, 0);
   MOTOR_SetSpeed(Right, 0);
+
   LeverUp();
 
-  Move(0.4,35,Forward);
-  Turn(180,Left);
-  FollowLine(0.4,Reverse);
+  Move(0.4,5,Forward);
+
+  MOTOR_SetSpeed(Left, 0);
+  MOTOR_SetSpeed(Right, 0);
 }
 
 void LeaveBallThree(void)
@@ -634,13 +641,12 @@ void LeaveBallThree(void)
   Turn(180,Left);
   FindBall();
   MoveBall();
-  Move(0.4,15,Forward);
-  Move(0.5,75,Reverse); 
-  Turn(90,Left);
-  FindLine(Right);
+  Move(0.4,30,Forward);
+  Turn(75,Left);
+  FindLine(Left);
   Move(0.4,15,Reverse);
   delay(100);
-  Turn(45,Right);
+  Turn(45,Left);
   
   while (!SLeft || !SCenter || !SRight)
   {
@@ -658,15 +664,17 @@ void LeaveBallThree(void)
   
     FollowLine(0.4, Reverse);
   }
-  Move(0.4,30,Reverse);
+  Move(0.4,50,Reverse);
 
   MOTOR_SetSpeed(Left, 0);
   MOTOR_SetSpeed(Right, 0);
+  
   LeverUp();
 
-  Move(0.4,35,Forward);
-  Turn(180,Left);
-  FollowLine(0.4,Reverse);
+  Move(0.4,5,Forward);
+
+  MOTOR_SetSpeed(Left, 0);
+  MOTOR_SetSpeed(Right, 0);
 }
 
 void LeaveBallFour(void)
@@ -676,9 +684,8 @@ void LeaveBallFour(void)
   Turn(180,Left);
   FindBall();
   MoveBall();
-  Move(0.4,15,Forward);
-  Move(0.5,75,Reverse); 
-  Turn(90,Left);
+  Move(0.4,30,Forward);
+  Turn(75,Right);
   FindLine(Right);
   Move(0.4,15,Reverse);
   delay(100);
@@ -700,13 +707,15 @@ void LeaveBallFour(void)
   
     FollowLine(0.4, Reverse);
   }
-  Move(0.4,30,Reverse);
+  Move(0.4,50,Reverse);
 
   MOTOR_SetSpeed(Left, 0);
   MOTOR_SetSpeed(Right, 0);
+  
   LeverUp();
 
-  Move(0.4,35,Forward);
-  Turn(180,Left);
-  FollowLine(0.4,Reverse);
+  Move(0.4,5,Forward);
+
+  MOTOR_SetSpeed(Left, 0);
+  MOTOR_SetSpeed(Right, 0);
 }
