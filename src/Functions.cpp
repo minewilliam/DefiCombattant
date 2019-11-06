@@ -224,6 +224,23 @@ int16_t LocateBall(void)
       Turn(turnAngle_Max,RIGHT);
       ballFound = true;
     }
+    else
+    {
+      if(turnAngle >= turnAngle_Max)
+      {
+        Turn(turnAngle_Max,RIGHT);
+        if(rangeMin >= currentRange <= rangeMax)
+        {
+          ballFound = true;
+        }
+        else
+        {
+          turnAngle = 0;
+          turnDirection = RIGHT;
+        }
+        
+      }
+    }
     
     if(!ballFound)
     {
