@@ -72,6 +72,8 @@ void FindBall()
     MOTOR_SetSpeed(Left, 0);
     MOTOR_SetSpeed(Right, 0);
 
+    delay (250);
+    
     Impale();
 
     delay(200);
@@ -109,6 +111,10 @@ void FollowLine(float SpeedCommand, bool Direction)
   {
     AdjustRight = Speed + 0.1;
     AdjustLeft = Speed - 0.1;
+  }
+  else if(SLeft && SCenter && SRight)
+  {
+    //NADA
   }
   else
   {

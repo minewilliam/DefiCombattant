@@ -267,10 +267,9 @@ void GetBallOne (void)
 
   Move(0.4, 10, Forward);
 
-  Turn(150,Left);
+  Turn(135,Left);
   MOTOR_SetSpeed(Left, -0.2);
   MOTOR_SetSpeed(Right, 0.2);
-  delay (500);
   while (SCenter)
   {
     SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
@@ -336,10 +335,9 @@ void GetBallTwo (void)
 
   Move(0.4, 10, Forward);
 
-  Turn(150,Left);
+  Turn(135,Left);
   MOTOR_SetSpeed(Left, -0.2);
   MOTOR_SetSpeed(Right, 0.2);
-  delay (500);
   while (SCenter)
   {
     SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
@@ -367,9 +365,9 @@ void GetBallTwo (void)
   LeverUp();
 
   Move(1, 30, Forward);
-  Turn(45,Left);
+  Turn(45,Right);
   Move(1, 30, Forward);
-  Turn(90,Left);
+  Turn(90,Right);
   Move(1, 30, Forward);
 }
 
@@ -408,10 +406,9 @@ void GetBallThree (void)
 
   Move(0.4, 10, Forward);
 
-  Turn(150,Left);
+  Turn(135,Left);
   MOTOR_SetSpeed(Left, -0.2);
   MOTOR_SetSpeed(Right, 0.2);
-  delay (500);
   while (SCenter)
   {
     SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
@@ -439,9 +436,9 @@ void GetBallThree (void)
   LeverUp();
 
   Move(1, 30, Forward);
-  Turn(45,Left);
+  Turn(45,Right);
   Move(1, 30, Forward);
-  Turn(90,Left);
+  Turn(90,Right);
   Move(1, 30, Forward);
 }
 
@@ -480,10 +477,9 @@ void GetBallFour (void)
 
   Move(0.4, 10, Forward);
 
-  Turn(150,Left);
+  Turn(135,Left);
   MOTOR_SetSpeed(Left, -0.2);
   MOTOR_SetSpeed(Right, 0.2);
-  delay (500);
   while (SCenter)
   {
     SCenter = digitalRead(REFLECTION_SENSOR_CENTER);
@@ -568,11 +564,13 @@ void LeaveBallTwo(void)
 {
   int SLeft, SCenter, SRight = 0;
 
-  Turn(180,Left);
+  int16_t Place = LocateBall();
+
+  Turn(Place+180, RIGHT);
   FindBall();
   MoveBall();
   Move(0.4,15,Forward);
-  Turn(180,Right);
+  Turn(180-Place,Right);
   Move(0.4,90,Forward);
   Turn(75,Left);
   Move(0.4,10,Reverse);
