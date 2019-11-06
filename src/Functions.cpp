@@ -259,13 +259,14 @@ void GetBallOne (void)
       SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
     }
   
-    FollowLine(0.4, Reverse);
+    FollowLine(0.3, Reverse);
   }
 
   FindBall();
+  Move(0.4,1,Forward);
   MoveBall();
 
-  Move(0.4, 10, Forward);
+  Move(0.4, 15, Forward);
 
   Turn(135,Left);
   MOTOR_SetSpeed(Left, -0.2);
@@ -289,18 +290,21 @@ void GetBallOne (void)
       SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
     }
   
-    FollowLine(0.4, Reverse);
+    FollowLine(0.3, Reverse);
   }
+
+  Move(0.4,8,Reverse);
 
   MOTOR_SetSpeed(Left, 0);
   MOTOR_SetSpeed(Right, 0);
+  delay(500);
   LeverUp();
 
   Move(1, 30, Forward);
   Turn(45,Left);
   Move(1, 30, Forward);
   Turn(90,Left);
-  Move(1, 30, Forward);
+  Move(1, 50, Forward);
 }
 
 void GetBallTwo (void)
@@ -327,13 +331,14 @@ void GetBallTwo (void)
       SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
     }
   
-    FollowLine(0.4, Reverse);
+    FollowLine(0.3, Reverse);
   }
 
   FindBall();
+  Move(0.4,1,Forward);
   MoveBall();
 
-  Move(0.4, 10, Forward);
+  Move(0.4, 15, Forward);
 
   Turn(135,Left);
   MOTOR_SetSpeed(Left, -0.2);
@@ -357,18 +362,21 @@ void GetBallTwo (void)
       SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
     }
   
-    FollowLine(0.4, Reverse);
+    FollowLine(0.3, Reverse);
   }
 
+  Move(0.4,8,Reverse);
+  
   MOTOR_SetSpeed(Left, 0);
   MOTOR_SetSpeed(Right, 0);
+  delay(500);
   LeverUp();
 
   Move(1, 30, Forward);
   Turn(45,Right);
   Move(1, 30, Forward);
   Turn(90,Right);
-  Move(1, 30, Forward);
+  Move(1, 50, Forward);
 }
 
 void GetBallThree (void)
@@ -398,13 +406,14 @@ void GetBallThree (void)
       SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
     }
   
-    FollowLine(0.4, Reverse);
+    FollowLine(0.3, Reverse);
   }
 
   FindBall();
+  Move(0.4,1,Forward);
   MoveBall();
 
-  Move(0.4, 10, Forward);
+  Move(0.4, 15, Forward);
 
   Turn(135,Left);
   MOTOR_SetSpeed(Left, -0.2);
@@ -428,7 +437,7 @@ void GetBallThree (void)
       SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
     }
   
-    FollowLine(0.4, Reverse);
+    FollowLine(0.3, Reverse);
   }
 
   MOTOR_SetSpeed(Left, 0);
@@ -439,7 +448,7 @@ void GetBallThree (void)
   Turn(45,Right);
   Move(1, 30, Forward);
   Turn(90,Right);
-  Move(1, 30, Forward);
+  Move(1, 50, Forward);
 }
 
 void GetBallFour (void)
@@ -469,13 +478,14 @@ void GetBallFour (void)
       SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
     }
   
-    FollowLine(0.4, Reverse);
+    FollowLine(0.3, Reverse);
   }
 
   FindBall();
+  Move(0.4,1,Forward);
   MoveBall();
 
-  Move(0.4, 10, Forward);
+  Move(0.4, 15, Forward);
 
   Turn(135,Left);
   MOTOR_SetSpeed(Left, -0.2);
@@ -499,7 +509,7 @@ void GetBallFour (void)
       SRight = digitalRead(REFLECTION_SENSOR_RIGHT);
     }
   
-    FollowLine(0.4, Reverse);
+    FollowLine(0.3, Reverse);
   }
 
   MOTOR_SetSpeed(Left, 0);
@@ -510,7 +520,7 @@ void GetBallFour (void)
   Turn(45,Left);
   Move(1, 30, Forward);
   Turn(90,Left);
-  Move(1, 30, Forward);
+  Move(1, 50, Forward);
 }
 
 void LeaveBallOne(void)

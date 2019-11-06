@@ -69,14 +69,14 @@ void FindBall()
     MOTOR_SetSpeed(Right, -0.2);
   }
 
-    MOTOR_SetSpeed(Left, 0);
-    MOTOR_SetSpeed(Right, 0);
+  delay(500);
 
-    delay (250);
-    
-    Impale();
+  MOTOR_SetSpeed(Left, 0);
+  MOTOR_SetSpeed(Right, 0);
+  
+  Impale();
 
-    delay(200);
+  delay(200);
 }
 
 void FollowLine(float SpeedCommand, bool Direction)
@@ -114,7 +114,8 @@ void FollowLine(float SpeedCommand, bool Direction)
   }
   else if(SLeft && SCenter && SRight)
   {
-    //NADA
+    MOTOR_SetSpeed(Right, -0.15);
+    MOTOR_SetSpeed(Left, -0.15);  
   }
   else
   {
@@ -156,7 +157,7 @@ void LeverUp(void)
 void MoveBall(void)
 {
   #ifdef Dumb
-    for (int i = 110; i > 80; i--)
+    for (int i = 110; i > 75; i--)
     {
       SERVO_SetAngle(0,i);
       delay(50);
