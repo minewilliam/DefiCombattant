@@ -1,7 +1,7 @@
 #include "Functions.h"
 #include "RobotSense.h"
 
-#define Dumb
+#define Dumber
 #define Four
 
 void setup() 
@@ -33,6 +33,7 @@ void loop()
   #endif
 
   #ifdef Dumber
+  delay(32000);
     #ifdef One
      LeaveBallOne();
     #endif

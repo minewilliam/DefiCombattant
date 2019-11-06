@@ -195,8 +195,8 @@ int16_t LocateBall(void)
 {
   const float rangeMax = 80;
   const float rangeMin = 20;
-  const uint16_t turnAngle_Max = 25;
-  const int turnIncrement = 5; //Increment in degrees
+  const uint16_t turnAngle_Max = 20;
+  const int turnIncrement = 1; //Increment in degrees
 
   int16_t angleOut = 0;
   bool ballFound = false;
@@ -221,7 +221,7 @@ int16_t LocateBall(void)
 
     if(turnAngle >= turnAngle_Max*2)
     {
-      Turn(turnAngle_Max+7,RIGHT);
+      Turn(turnAngle_Max+16,RIGHT);
       ballFound = true;
     }
     
@@ -529,7 +529,10 @@ void LeaveBallOne(void)
 
   int16_t Place = LocateBall();
 
+  Move(0.4,6,Reverse);
+  delay(500);
   Turn(Place+180, RIGHT);
+
   FindBall();
   MoveBall();
   Move(0.4,15,Forward);
@@ -576,6 +579,8 @@ void LeaveBallTwo(void)
 
   int16_t Place = LocateBall();
 
+  Move(0.4,6,Reverse);
+  delay(500);
   Turn(Place+180, RIGHT);
   FindBall();
   MoveBall();
@@ -622,11 +627,16 @@ void LeaveBallThree(void)
 {
   int SLeft, SCenter, SRight = 0;
 
-  Turn(180,Left);
+  int16_t Place = LocateBall();
+
+  Move(0.4,6,Reverse);
+  delay(500);
+  Turn(Place+180, RIGHT);
   FindBall();
   MoveBall();
-  Move(0.4,30,Forward);
-  Turn(75,Left);
+  Move(0.4,30,Forward);  
+  
+  Turn(75+Place,Left);
   FindLine(Left);
   Move(0.4,15,Reverse);
   delay(100);
@@ -665,11 +675,16 @@ void LeaveBallFour(void)
 {
   int SLeft, SCenter, SRight = 0;
 
-  Turn(180,Left);
+  int16_t Place = LocateBall();
+
+  Move(0.4,6,Reverse);
+  delay(500);
+  Turn(Place+180, RIGHT);
+
   FindBall();
   MoveBall();
   Move(0.4,30,Forward);
-  Turn(75,Right);
+  Turn(75+Place,Right);
   FindLine(Right);
   Move(0.4,15,Reverse);
   delay(100);

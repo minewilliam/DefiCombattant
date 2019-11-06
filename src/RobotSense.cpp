@@ -65,14 +65,21 @@ void FindBall()
 {
   while(!IRSensor())
   {
-    MOTOR_SetSpeed(Left, -0.2);
-    MOTOR_SetSpeed(Right, -0.2);
+    #ifdef Dumb
+      MOTOR_SetSpeed(Left, -0.2);
+      MOTOR_SetSpeed(Right, -0.2);
+    #endif
+    #ifdef Dumber
+      MOTOR_SetSpeed(Left, -0.3);
+      MOTOR_SetSpeed(Right, -0.3);
+    #endif
   }
 
-  delay(500);
-
-  MOTOR_SetSpeed(Left, 0);
-  MOTOR_SetSpeed(Right, 0);
+  #ifdef Dumb
+    delay(500);
+    MOTOR_SetSpeed(Left, 0);
+    MOTOR_SetSpeed(Right, 0);
+  #endif
   
   Impale();
 
@@ -180,7 +187,7 @@ void Impale(void)
   #endif  
 
   #ifdef Dumber
-    SERVO_SetAngle(0,70);
+    SERVO_SetAngle(0,75);
   #endif 
 }
 
