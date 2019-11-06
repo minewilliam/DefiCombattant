@@ -1,7 +1,7 @@
 #include "Functions.h"
 #include "RobotSense.h"
 
-#define Dumb
+#define Dumber
 #define One
 
 void setup() 

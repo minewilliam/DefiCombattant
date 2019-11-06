@@ -195,7 +195,7 @@ int16_t LocateBall(void)
 {
   const float rangeMax = 80;
   const float rangeMin = 20;
-  const uint16_t turnAngle_Max = 45;
+  const uint16_t turnAngle_Max = 25;
   const int turnIncrement = 5; //Increment in degrees
 
   int16_t angleOut = 0;
@@ -521,12 +521,13 @@ void LeaveBallOne(void)
 {
   int SLeft, SCenter, SRight = 0;
 
-  Turn(LocateBall()+180, RIGHT);
+  int16_t Place = LocateBall();
 
+  Turn(Place+180, RIGHT);
   FindBall();
   MoveBall();
   Move(0.4,15,Forward);
-  Turn(180,Right);
+  Turn(180-Place,Right);
   Move(0.4,90,Forward);
   Turn(85,Right);
   FindLine(Right);
