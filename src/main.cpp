@@ -33,7 +33,8 @@ void loop()
   #endif
 
   #ifdef Dumber
-  delay(32000);
+  //delay(32000);
+  delay(5000);
     #ifdef One
      LeaveBallOne();
     #endif

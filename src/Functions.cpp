@@ -197,40 +197,59 @@ int16_t LocateBall(void)
   const float rangeMin = 20;
   const uint16_t turnAngle_Max = 20;
   const int turnIncrement = 1; //Increment in degrees
+  const int sensorPoolingRate = 100; //Delay in ms
 
   int16_t angleOut = 0;
   bool ballFound = false;
   uint16_t turnAngle = 0;
   float range = 10000;
 
+  uint16_t timer = millis();
+
   Turn(turnAngle_Max, RIGHT);
 
   while(!ballFound)
   {
-    float currentRange = IR_Distance();
-    if(rangeMin <= currentRange && currentRange <= rangeMax)
+    if(timer+sensorPoolingRate <= millis())
     {
-      if(currentRange < range)
+    float currentRange = IR_Distance();
+      if(rangeMin <= currentRange && currentRange <= rangeMax)
       {
-        range = currentRange;
-        angleOut = turnAngle_Max-turnAngle;
-        Serial.print("Angle out: ");
-        Serial.println(angleOut);
+        if(currentRange < range)
+        {
+          if(range < rangeMax)
+          {
+            angleOut = turnAngle_Max-turnAngle;
+            ballFound = true;
+          }
+          else
+          {
+            range = currentRange;
+            angleOut = turnAngle_Max-turnAngle;
+          }
+        }
+        else
+        {
+          angleOut = turnAngle_Max-turnAngle;
+          ballFound = true;
+        }
+        
       }
+
+      if(turnAngle >= turnAngle_Max*2)
+      {
+        Turn(turnAngle_Max+16,RIGHT);
+        ballFound = true;
+      }
+      
+      timer = millis();
     }
 
-    if(turnAngle >= turnAngle_Max*2)
-    {
-      Turn(turnAngle_Max+16,RIGHT);
-      ballFound = true;
-    }
-    
     if(!ballFound)
     {
       Turn(turnIncrement, LEFT);
       turnAngle += turnIncrement;
     }
-    delay(200);
   }
   return angleOut;
 }
