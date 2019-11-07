@@ -78,6 +78,8 @@ void FindBall()
   #ifdef Dumb
     delay(500);
   #endif
+  MOTOR_SetSpeed(Left, 0);
+  MOTOR_SetSpeed(Right, 0);
   
   MOTOR_SetSpeed(Left, 0);
   MOTOR_SetSpeed(Right, 0);

@@ -2,7 +2,7 @@
 #include "RobotSense.h"
 
 #define Dumber
-#define Four
+#define One
 
 void setup() 
 {
