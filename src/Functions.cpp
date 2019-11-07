@@ -210,6 +210,7 @@ int16_t LocateBall(void)
 
   while(!ballFound)
   {
+    float currentRange = IR_Distance();
     if(timer+sensorPoolingRate <= millis())
     {
       float currentRange = SONAR_GetRange(0);

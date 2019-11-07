@@ -66,3 +66,5 @@ void MoveBall(void);
  * @return True if something is under the sensor 
  */
  bool IRSensor(void);
+
+ float IR_Distance (void);

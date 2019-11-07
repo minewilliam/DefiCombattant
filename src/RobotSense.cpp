@@ -200,3 +200,21 @@ bool IRSensor()
     return 0;
   }
 }
+
+float IR_Distance (void)
+{
+  float Distance;
+  float Volt;
+  uint16_t IRRead;
+
+  IRRead = ROBUS_ReadIR(0);
+
+  Volt = (float)IRRead/1023 * 5;
+
+
+  Distance = (Volt - 0.1)/20.33;
+ 
+  Distance = 1/Distance;
+
+  return Distance;
+}
