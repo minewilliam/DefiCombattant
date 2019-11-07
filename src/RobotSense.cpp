@@ -81,9 +81,6 @@ void FindBall()
   MOTOR_SetSpeed(Left, 0);
   MOTOR_SetSpeed(Right, 0);
   
-  MOTOR_SetSpeed(Left, 0);
-  MOTOR_SetSpeed(Right, 0);
-  
   Impale();
 
   delay(200);
