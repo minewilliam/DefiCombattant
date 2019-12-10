@@ -86,12 +86,12 @@ class Robus
   private:
     const uint8_t IR_PIN[4] =  {A0, A1, A2, A3};
     const uint8_t BUMPER_PIN[4] =  {27, 29, 26, 28};// (0: left, 1:rigth, 2:front, 3:rear)
-    const uint8_t __SERVO_PINS__[2] = {4, 7};
+    const uint8_t __SERVO_PINS__[3] = {4, 7, 11};
     const uint8_t __SERVO_RANGE__[2] = {0, 180}; // 0 to 180 degree
     const uint8_t __SONAR_ECHO_PINS__[2] = {22, 24};
     const uint8_t __SONAR_TRIG_PINS__[2] = {23, 25};
     //Servo __servo__[2];
-    MegaServo __servo__[2];
+    MegaServo __servo__[3];
     SRF04Sonar __sonar__[2];
 };
 #endif //Robus_H_

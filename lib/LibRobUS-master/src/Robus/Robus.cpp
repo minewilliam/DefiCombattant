@@ -12,8 +12,10 @@ void Robus::init(){
     pinMode(BUMPER_PIN[i], INPUT);
   }
   for(uint8_t id = 0; id < 2; id++){
-    enableServo(id);
     __sonar__[id].init(__SONAR_ECHO_PINS__[id], __SONAR_TRIG_PINS__[id]);
+  }
+  for(uint8_t id = 0; id < 3; id++){
+    enableServo(id);
   }
 }
 
@@ -34,7 +36,7 @@ uint16_t Robus::readIR(uint8_t id){
 }
 
 void Robus::enableServo(uint8_t id){
-  if(id >= 0 && id < 2){
+  if(id >= 0 && id < 3){
       __servo__[id].attach(__SERVO_PINS__[id]);
   }else{
     Serial.println("Invalid servo id!");
@@ -42,7 +44,7 @@ void Robus::enableServo(uint8_t id){
 }
 
 void Robus::disableServo(uint8_t id){
-  if(id >= 0 && id < 2){
+  if(id >= 0 && id < 3){
       __servo__[id].detach();
   }else{
     Serial.println("Invalid servo id!");
@@ -50,7 +52,7 @@ void Robus::disableServo(uint8_t id){
 }
 
 void Robus::setAngleServo(uint8_t id, uint8_t angle){
-   if(id<0 || id>1){
+   if(id<0 || id>2){
     Serial.println("Invalid servo id!");
   return;
   }
